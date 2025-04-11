@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ZZTCompose" parent="Theme.AppCompat.NoActionBar" />
+
+    <style name="Theme.ZZTCompose.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.ZTComposeSample.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ZTComposeSample.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

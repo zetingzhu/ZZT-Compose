@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">ZT-ComposeSample</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="my_courses">My Courses</string>
+    <string name="featured">Featured</string>
+    <string name="search">Search</string>
+    <string name="bottom_navigation_home">Home</string>
+    <string name="bottom_navigation_profile">Profile</string>
+    <string name="placeholder_search">Search</string>
+    <string name="ab1_inversions">Align your body</string>
+    <string name="fc2_nature_meditations">Favorite collection</string>
+    <string name="align_your_body">给它一个标题</string>
+    <string name="favorite_collections">在次创建一个标题</string>
+
+    <string name="text_v1">测试文案1</string>
+    <string name="greetings">AAA bbb CCC ddd</string>
+    <string name="hello_world">可以添加国际化\n</string>
+
+
+</resources>
