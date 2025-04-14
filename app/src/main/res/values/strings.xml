@@ -27,6 +27,12 @@
     <string name="text_v1">测试文案1</string>
     <string name="greetings">AAA bbb CCC ddd</string>
     <string name="hello_world">可以添加国际化\n</string>
+    <string name="title_activity_zt_compose_main">ZtComposeMainAct</string>
 
+    <string name="feature_settings_dark_mode_preference">Dark mode preference</string>
+    <string name="feature_settings_dark_mode_config_system_default">System default</string>
+    <string name="feature_settings_dark_mode_config_light">Light</string>
+    <string name="feature_settings_dark_mode_config_dark">Dark</string>
+    <string name="title_activity_act_horizontal_pager">ActHorizontalPager</string>
 
 </resources>

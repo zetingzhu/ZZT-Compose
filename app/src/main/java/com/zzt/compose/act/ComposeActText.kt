@@ -173,12 +173,12 @@ class ComposeActText : ComponentActivity() {
             TextField(
                 value = text2,
                 onValueChange = { text2 = it },
-                colors = TextFieldDefaults.textFieldColors(
-                    // 光标
-                    cursorColor = Color.Yellow,
-                    // 文字颜色
-                    textColor = Color.Red,
-                )
+//                colors = TextFieldDefaults.textFieldColors(
+//                    // 光标
+//                    cursorColor = Color.Yellow,
+//                    // 文字颜色
+//                    textColor = Color.Red,
+//                )
             )
         }
         Spacer(modifier = Modifier.height(8.dp))

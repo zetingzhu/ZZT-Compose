@@ -55,8 +55,8 @@ class ComposeNavV1 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            BottomNavPreview()
-            ScreenContentPreview()
+            BottomNavPreview()
+//            ScreenContentPreview()
         }
     }
 
@@ -93,9 +93,7 @@ class ComposeNavV1 : ComponentActivity() {
             Icon(
                 imageVector = Icons.Default.Search, contentDescription = null
             )
-        }, colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colorScheme.surface
-        ), placeholder = {
+        },   placeholder = {
             Text(stringResource(R.string.placeholder_search))
         }, modifier = modifier
             .fillMaxWidth()
