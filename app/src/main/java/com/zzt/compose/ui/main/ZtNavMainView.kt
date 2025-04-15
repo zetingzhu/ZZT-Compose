@@ -12,19 +12,44 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Send
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
@@ -36,6 +61,7 @@ import androidx.compose.material3.SnackbarResult.ActionPerformed
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
@@ -58,7 +84,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.zzt.compose.R
-import com.zzt.compose.ui.theme.ZZTComposeTheme
+import com.zzt.compose.theme.ZZTComposeTheme
 import kotlinx.coroutines.launch
 import java.io.Serializable
 
@@ -81,8 +107,7 @@ fun ZtNavMainView(
             ModalDrawerSheet {
                 ZtNavDrawView()
             }
-        },
-        drawerState = drawerState
+        }, drawerState = drawerState
     ) {
 
         var currentSelect by remember {
@@ -91,7 +116,8 @@ fun ZtNavMainView(
 
         val menuData = listOf(
             BottomItemData(Pages.PAGE_MAIN, "首页", Icons.Filled.Home),
-            BottomItemData(Pages.PAGE_SETTING, "设置", Icons.Filled.Settings)
+            BottomItemData(Pages.PAGE_SETTING, "设置", Icons.Filled.Settings),
+            BottomItemData(Pages.PAGE_SYSTEM, "系统片段代码", Icons.Filled.Face)
         )
 
         val navController = rememberNavController()
@@ -127,8 +153,7 @@ fun ZtNavMainView(
                             ).show()
                         }) {
                             Icon(
-                                imageVector = Icons.Filled.Search,
-                                contentDescription = "Search"
+                                imageVector = Icons.Filled.Search, contentDescription = "Search"
                             )
                         }
                     },
@@ -173,7 +198,7 @@ fun ZtNavMainView(
                         }
                     }
                 }
-            }
+            },
         ) { innerPadding ->
             Box(
                 modifier = Modifier.padding(innerPadding)
@@ -188,6 +213,9 @@ fun ZtNavMainView(
                     composable(Pages.PAGE_SETTING) {
                         SettingPage()
                     }
+                    composable(Pages.PAGE_SYSTEM) {
+                        SystemPage()
+                    }
                 }
             }
         }
@@ -199,6 +227,7 @@ fun ZtNavMainView(
 object Pages {
     const val PAGE_MAIN = "main"
     const val PAGE_SETTING = "setting"
+    const val PAGE_SYSTEM = "system"
 }
 
 

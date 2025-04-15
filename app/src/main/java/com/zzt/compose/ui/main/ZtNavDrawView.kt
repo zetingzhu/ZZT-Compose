@@ -34,14 +34,14 @@ fun ZtNavDrawView() {
     ) {
         Spacer(Modifier.height(12.dp))
         Text(
-            "Drawer Title",
+            "侧边栏标题",
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.titleLarge
         )
         HorizontalDivider()
 
         Text(
-            "Section 1",
+            "分组 一",
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.titleMedium
         )
@@ -50,14 +50,16 @@ fun ZtNavDrawView() {
             selected = false,
             onClick = { /* Handle click */ })
         NavigationDrawerItem(
-            label = { Text("Item 2") },
+            label = { Text("启动系统代码 snippets") },
             selected = false,
-            onClick = { /* Handle click */ })
+            onClick = {
+
+            })
 
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
         Text(
-            "Section 2",
+            "分组 二",
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.titleMedium
         )

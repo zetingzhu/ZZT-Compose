@@ -6,15 +6,17 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,99 +39,84 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.zzt.ssssssssssssssss.ui.theme.SampleCompostTheme
+import com.zzt.compose.theme.SampleCompostTheme
 import com.zzt.compose.R
 import com.zzt.compose.act.ActivityCompostMain.Companion.TAG
+import com.zzt.compose.theme.ZZTComposeTheme
 
 class ActivityCompostMain : ComponentActivity() {
     companion object {
         val TAG = ActivityCompostMain::class.java.name
-        fun startActivity(con: Context) {
+        fun start(con: Context) {
             var intent = Intent(con, ActivityCompostMain::class.java)
             var bundle = Bundle()
             intent.putExtras(bundle)
             con.startActivity(intent)
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val extras = intent.extras
-        when (extras?.getString("type")) {
-            "1" -> {
-                setContent {
-                    SampleCompostTheme {
-                        // A surface container using the 'background' color from the theme
-                        Surface(color = MaterialTheme.colorScheme.background) {
+        enableEdgeToEdge()
+        setContent {
+            ZZTComposeTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        Column(
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState())
+                        ) {
                             Greeting("Android")
+
+                            HorizontalDivider()
+                            ArtistCard()
+
+                            HorizontalDivider()
+
+                            ArtistCard2()
+
+                            HorizontalDivider()
+
+                            ArtistCard3(Artist("上面文案 , 这个比较长", "下面文案"))
+
+                            HorizontalDivider()
+
+                            ArtistCard4(Artist("上面文案 , 这个比较长", "下面文案"), onClick = {
+                                Log.w(TAG, "这个是点击事件")
+                            })
+
+                            HorizontalDivider()
+
+                            ArtistCard5(Artist("上面文案 , 这个比较长", "下面文案"), onClick = {
+                                Log.w(TAG, "这个是点击事件")
+                            })
+                            HorizontalDivider()
+
+                            createTextV1("AAAAAAA")
+
+                            HorizontalDivider()
+
+                            createCardBox()
+
+                            HorizontalDivider()
+
+                            createCardWeight()
+
+                            HorizontalDivider()
+
+                            createCardClick()
+
+                            HorizontalDivider()
+
+                            ConstraintLayoutContent()
+
+
+                            HorizontalDivider()
+
                         }
                     }
                 }
             }
-
-            "2" -> {
-                setContent(content = {
-
-                })
-            }
-
-            "3" -> {
-                setContent {
-                    ArtistCard()
-                }
-            }
-
-            "4" -> {
-                setContent {
-                    ArtistCard2()
-                }
-            }
-
-            "5" -> {
-                setContent {
-                    ArtistCard3(Artist("上面文案 , 这个比较长", "下面文案"))
-                }
-            }
-
-            "6" -> {
-                setContent {
-                    ArtistCard4(Artist("上面文案 , 这个比较长", "下面文案"), onClick = {
-                        Log.w(TAG, "这个是点击事件")
-                    })
-                }
-            }
-
-            "7" -> {
-                setContent {
-                    ArtistCard5(Artist("上面文案 , 这个比较长", "下面文案"), onClick = {
-                        Log.w(TAG, "这个是点击事件")
-                    })
-                }
-            }
-
-            "8" -> {
-                setContent {
-                    createCardBox()
-                }
-            }
-
-            "9" -> {
-                setContent {
-                    createCardWeight()
-                }
-            }
-
-            "10" -> {
-                setContent {
-                    createCardClick()
-                }
-            }
-
-            "11" -> setContent {
-                ConstraintLayoutContent()
-            }
-
         }
     }
 }

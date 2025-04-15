@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.recyclerview.widget.RecyclerView
 import com.zzt.adapter.StartActivityRecyclerAdapter
-import com.zzt.compose.act.ActHorizontalPager
+import com.zzt.compose.act.ActivityCompostMain
 import com.zzt.compose.act.ComposeActText
 import com.zzt.compose.act.ComposeActV2
 import com.zzt.compose.act.ComposeAlignmentLineV1
@@ -39,7 +40,7 @@ import com.zzt.compose.act.ComposeListV2
 import com.zzt.compose.act.ComposeNavV1
 import com.zzt.compose.act.ComposeScaffoldV1
 import com.zzt.compose.act.ComposeScaffoldV2
-import com.zzt.compose.ui.theme.ZZTComposeTheme
+import com.zzt.compose.theme.ZZTComposeTheme
 import com.zzt.entity.StartActivityDao
 
 /**
@@ -63,6 +64,17 @@ fun MainPage(toSettingPage: () -> Unit) {
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(0.dp),
     ) {
+
+        item {
+            MessageRow(message = "Compost 布局基本知识", onClick = {
+                ActivityCompostMain.start(context)
+            })
+        }
+        item {
+            MessageRow(message = "Compost 布局基本知识", onClick = {
+                ActivityCompostMain.start(context)
+            })
+        }
         item {
             MessageRow(message = "Compost text  这个是文本的使用和各种api", onClick = {
                 ComposeActText.start(context)
@@ -124,16 +136,16 @@ fun MainPage(toSettingPage: () -> Unit) {
             MessageRow(
                 message = "Nav v1   底部导航栏", onClick = { ComposeNavV1.start(context) })
         }
-
         item {
             MessageRow(
                 message = "HorizontalPager 水平滚动",
-                onClick = { ActHorizontalPager.start(context) })
+                onClick = { })
         }
     }
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MessageRow(
     message: String, onClick: () -> Unit

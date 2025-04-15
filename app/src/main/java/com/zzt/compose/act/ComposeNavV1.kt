@@ -18,10 +18,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -89,15 +86,16 @@ class ComposeNavV1 : ComponentActivity() {
     fun SearchBar(
         modifier: Modifier = Modifier
     ) {
-        TextField(value = "", onValueChange = {}, leadingIcon = {
+        TextField(
+            value = "", onValueChange = {}, leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search, contentDescription = null
             )
-        },   placeholder = {
+        }, placeholder = {
             Text(stringResource(R.string.placeholder_search))
         }, modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 56.dp)
+                .fillMaxWidth()
+                .heightIn(min = 56.dp)
         )
     }
 

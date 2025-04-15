@@ -31,7 +31,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zzt.compose.R
-import com.zzt.compose.ui.theme.ZZTComposeTheme
+import com.zzt.compose.theme.ZZTComposeTheme
 
 /**
  * @author: zeting
