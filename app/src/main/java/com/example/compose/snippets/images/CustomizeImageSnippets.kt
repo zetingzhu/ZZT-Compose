@@ -29,6 +29,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -77,20 +78,56 @@ fun ImageExamplesScreen() {
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
+
+        Text(text = "加载网络图片")
+        LoadingImageFromInternetCoil()
+        LoadingImageFromInternetGlide()
+
+        Text(text = "ContentScale.Fit：均匀缩放图片，并保持宽高比（默认）。如果内容小于指定大小，系统会放大图片以适应边界。")
         ContentScaleExample()
+
+        Text(text = "ContentScale.Crop：将图片居中裁剪到可用空间。")
         ClipImageExample()
+
+        Text(text = "clip 裁剪圆形（ CircleShape ） 裁剪圆角（ RoundedCornerShape ） ")
         ClipRoundedCorner()
+
+        Text(text = "clip 自定义裁剪形状")
         CustomClippingShape()
+
+        Text(text = "带边框图片")
         ImageWithBorder()
+
+        Text(text = "渐变边框")
         ImageRainbowBorder()
+
+        Text(text = "设置自定义宽高比")
         ImageAspectRatio()
+
+        Text(text = "颜色滤镜 - 转换图片的像素颜色")
         ImageColorFilter()
+
+        Text(text = "颜色滤镜 -对图片设置 BlendMode.Darken 和 Color.Green")
         ImageBlendMode()
+
+        Text(text = "通过颜色矩阵应用 Image 滤镜")
         ImageColorMatrix()
+
+        Text(text = "调整 Image 可组合项的对比度或亮度")
         ImageAdjustBrightnessContrast()
+
+        Text(text = "反转 Image 可组合项的颜色")
         ImageInvertColors()
+
+        Text(text = "对 Image 可组合项进行模糊处理")
         ImageBlur()
         ImageBlurEdgeTreatment()
+
+        Text(text = "自定义 Painter ，自定义图片")
+        CustomPainterUsage()
+
+        Text(text = "给布局组合设置背景")
+        CustomPainterModifier()
     }
 }
 

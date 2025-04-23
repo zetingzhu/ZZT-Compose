@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.Chip
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
@@ -46,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun ChipExamples() {
@@ -56,12 +59,32 @@ fun ChipExamples() {
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
+        Chip(
+            onClick = {
+                Log.d("Assist chip", "hello world")
+            },
+            leadingIcon = {
+                Icon(
+                    Icons.Filled.Settings,
+                    contentDescription = "Localized description",
+                    Modifier.size(AssistChipDefaults.IconSize)
+                )
+            }) {
+            Text("chip 按钮")
+        }
+
         Text("Assist chip")
         AssistChipExample()
+
         Text("Filter chip")
         FilterChipExample()
+
         Text("Input chip")
-        InputChipExample("Input chip") { Log.d("Input chip", "Chip dismissed") }
+        InputChipExample("Input chip") {
+            Log.d("Input chip", "Chip dismissed")
+        }
+
         Text("Suggestion chip")
         SuggestionChipExample()
     }
@@ -80,8 +103,7 @@ fun AssistChipExample() {
                 contentDescription = "Localized description",
                 Modifier.size(AssistChipDefaults.IconSize)
             )
-        }
-    )
+        })
 }
 // [END android_compose_components_assistchip]
 
@@ -97,16 +119,16 @@ fun FilterChipExample() {
             Text("Filter chip")
         },
         selected = selected,
-        leadingIcon = if (selected) {
-            {
+        leadingIcon = {
+            if (selected) {
                 Icon(
                     imageVector = Icons.Filled.Done,
                     contentDescription = "Done icon",
                     modifier = Modifier.size(FilterChipDefaults.IconSize)
                 )
+            } else {
+                null
             }
-        } else {
-            null
         },
     )
 }
@@ -154,7 +176,6 @@ fun InputChipExample(
 fun SuggestionChipExample() {
     SuggestionChip(
         onClick = { Log.d("Suggestion chip", "hello world") },
-        label = { Text("Suggestion chip") }
-    )
+        label = { Text("Suggestion chip") })
 }
 // [END android_compose_components_suggestionchip]

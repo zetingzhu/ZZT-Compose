@@ -16,11 +16,21 @@
 
 package com.example.compose.snippets.layouts
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
@@ -28,6 +38,7 @@ import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -56,17 +67,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.snippets.util.MaterialColors
 import kotlinx.coroutines.launch
 
-// [START android_compose_layout_material_theme]
+
+@Preview
 @Composable
-fun MyApp() {
-    MaterialTheme {
-        // Material Components like Button, Card, Switch, etc.
+fun DrawerExample() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+
+        Box(modifier = Modifier.height(300.dp)) {
+            DrawerStateDemo()
+        }
+
     }
 }
-// [END android_compose_layout_material_theme]
+
 
 @Composable
 fun ButtonDemo() {
@@ -267,6 +290,7 @@ fun ScaffoldSnackbarResultDemo() {
                             SnackbarResult.ActionPerformed -> {
                                 /* Handle snackbar action performed */
                             }
+
                             SnackbarResult.Dismissed -> {
                                 /* Handle snackbar dismissed */
                             }
@@ -328,9 +352,27 @@ fun DrawerStateDemo() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     ModalNavigationDrawer(
+        scrimColor = MaterialColors.YellowA50,
+        modifier = Modifier.fillMaxSize(),
+        gesturesEnabled = true,
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet { /* Drawer content */ }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.3f)
+                    .fillMaxHeight()
+                    .background(MaterialColors.Gray700)
+            ) {
+                Button(onClick = {
+                    scope.launch {
+                        drawerState.apply {
+                            close()
+                        }
+                    }
+                }) {
+                    TextS("关闭")
+                }
+            }
         },
     ) {
         Scaffold(
@@ -350,7 +392,14 @@ fun DrawerStateDemo() {
         ) { contentPadding ->
             // Screen content
             // [START_EXCLUDE silent]
-            Box(modifier = Modifier.padding(contentPadding)) { /* ... */ }
+            Box(
+                modifier = Modifier
+                    .padding(contentPadding)
+                    .fillMaxSize()
+                    .background(MaterialColors.Blue300)
+            ) { /* ... */
+                TextS("SSSSSSSSSS")
+            }
             // [END_EXCLUDE]
         }
     }

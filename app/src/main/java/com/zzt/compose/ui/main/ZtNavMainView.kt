@@ -103,11 +103,13 @@ fun ZtNavMainView(
     val context = LocalContext.current
 
     ModalNavigationDrawer(
+        gesturesEnabled = false,/*禁用手势*/
         drawerContent = {
             ModalDrawerSheet {
-                ZtNavDrawView()
+                ZtNavDrawView(scope,drawerState)
             }
-        }, drawerState = drawerState
+        },
+        drawerState = drawerState
     ) {
 
         var currentSelect by remember {

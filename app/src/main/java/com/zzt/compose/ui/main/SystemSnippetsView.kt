@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.snippets.animations.AnimationExamplesScreen
 import com.example.compose.snippets.animations.sharedelement.PlaceholderSizeAnimated_Demo
+import com.example.compose.snippets.architecture.ArchitectingExamplesScreen
 import com.example.compose.snippets.components.CardExamples
 import com.example.compose.snippets.components.ComponentsScreen
 import com.example.compose.snippets.components.SwitchExamples
@@ -22,16 +23,12 @@ import com.example.compose.snippets.images.ImageExamplesScreen
 import com.example.compose.snippets.landing.LandingScreen
 import com.example.compose.snippets.navigation.Destination
 import com.zzt.compose.theme.ZZTComposeTheme
-import com.example.compose.snippets.animations.AnimationExamplesScreen
-import com.example.compose.snippets.animations.sharedelement.PlaceholderSizeAnimated_Demo
 import com.example.compose.snippets.components.AppBarExamples
 import com.example.compose.snippets.components.BadgeExamples
 import com.example.compose.snippets.components.ButtonExamples
-import com.example.compose.snippets.components.CardExamples
 import com.example.compose.snippets.components.CarouselExamples
 import com.example.compose.snippets.components.CheckboxExamples
 import com.example.compose.snippets.components.ChipExamples
-import com.example.compose.snippets.components.ComponentsScreen
 import com.example.compose.snippets.components.DatePickerExamples
 import com.example.compose.snippets.components.DialogExamples
 import com.example.compose.snippets.components.DividerExamples
@@ -46,7 +43,15 @@ import com.example.compose.snippets.components.SliderExamples
 import com.example.compose.snippets.components.SwipeToDismissBoxExamples
 import com.example.compose.snippets.components.TimePickerExamples
 import com.example.compose.snippets.components.TooltipExamples
+import com.example.compose.snippets.graphics.CanvasExamplesScreen
+import com.example.compose.snippets.layouts.CustomLayoutExamples
+import com.example.compose.snippets.layouts.DrawerExample
+import com.example.compose.snippets.layouts.FlowLayoutExamples
 import com.example.compose.snippets.layouts.PagerExamples
+import com.example.compose.snippets.layouts.PagerExamplesV2
+import com.example.compose.snippets.lists.AnimatedOrderedListScreenPreview
+import com.example.compose.snippets.lists.LazyListExamples
+import com.example.compose.snippets.modifiers.ModifierPaddingExamplesScreen
 import com.example.compose.snippets.navigation.TopComponentsDestination
 
 /**
@@ -68,8 +73,11 @@ fun SystemPage() {
             Destination.entries.forEach { destination ->
                 composable(destination.route) {
                     when (destination) {
+                        Destination.ArchitectingExamples -> ArchitectingExamplesScreen()
+                        Destination.PaddingExamples -> ModifierPaddingExamplesScreen()
                         Destination.BrushExamples -> BrushExamplesScreen()
                         Destination.ImageExamples -> ImageExamplesScreen()
+                        Destination.CanvasExamples -> CanvasExamplesScreen()
                         Destination.AnimationQuickGuideExamples -> AnimationExamplesScreen()
                         Destination.ScreenshotExample -> BitmapFromComposableFullSnippet()
                         Destination.ComponentsExamples -> ComponentsScreen {
@@ -81,35 +89,42 @@ fun SystemPage() {
                         Destination.ShapesExamples -> ApplyPolygonAsClipImage()
                         Destination.SharedElementExamples -> PlaceholderSizeAnimated_Demo()
                         Destination.PagerExamples -> PagerExamples()
+                        Destination.PagerExamplesV2 -> PagerExamplesV2()
                     }
                 }
             }
             TopComponentsDestination.entries.forEach { destination ->
                 composable(destination.route) {
                     when (destination) {
+                        TopComponentsDestination.FlowLayoutExamples -> FlowLayoutExamples()
+                        TopComponentsDestination.CustomLayoutExamples -> CustomLayoutExamples()
+                        TopComponentsDestination.ButtonExamples -> ButtonExamples()
                         TopComponentsDestination.CardExamples -> CardExamples()
+                        TopComponentsDestination.CheckboxExamples -> CheckboxExamples()
+                        TopComponentsDestination.ChipExamples -> ChipExamples()
+                        TopComponentsDestination.DatePickerExamples -> DatePickerExamples()
+                        TopComponentsDestination.DialogExamples -> DialogExamples()
                         TopComponentsDestination.SwitchExamples -> SwitchExamples()
                         TopComponentsDestination.SliderExamples -> SliderExamples()
-                        TopComponentsDestination.DialogExamples -> DialogExamples()
-                        TopComponentsDestination.ChipExamples -> ChipExamples()
                         TopComponentsDestination.FloatingActionButtonExamples -> FloatingActionButtonExamples()
-                        TopComponentsDestination.ButtonExamples -> ButtonExamples()
+                        TopComponentsDestination.LazyListExamples -> LazyListExamples()
+                        TopComponentsDestination.LazyListExamplesV2 -> AnimatedOrderedListScreenPreview()
+                        TopComponentsDestination.MenusExample -> MenusExamples()
+                        TopComponentsDestination.DrawerExample -> DrawerExample()
+                        TopComponentsDestination.NavigationDrawerExamples -> NavigationDrawerExamples()
                         TopComponentsDestination.ProgressIndicatorExamples -> ProgressIndicatorExamples()
+
                         TopComponentsDestination.ScaffoldExample -> ScaffoldExample()
                         TopComponentsDestination.AppBarExamples -> AppBarExamples {
                             navController.popBackStack()
                         }
 
-                        TopComponentsDestination.CheckboxExamples -> CheckboxExamples()
                         TopComponentsDestination.DividerExamples -> DividerExamples()
                         TopComponentsDestination.BadgeExamples -> BadgeExamples()
                         TopComponentsDestination.PartialBottomSheet -> PartialBottomSheet()
                         TopComponentsDestination.TimePickerExamples -> TimePickerExamples()
-                        TopComponentsDestination.DatePickerExamples -> DatePickerExamples()
                         TopComponentsDestination.CarouselExamples -> CarouselExamples()
-                        TopComponentsDestination.MenusExample -> MenusExamples()
                         TopComponentsDestination.TooltipExamples -> TooltipExamples()
-                        TopComponentsDestination.NavigationDrawerExamples -> NavigationDrawerExamples()
                         TopComponentsDestination.SegmentedButtonExamples -> SegmentedButtonExamples()
                         TopComponentsDestination.SwipeToDismissBoxExamples -> SwipeToDismissBoxExamples()
                         TopComponentsDestination.SearchBarExamples -> SearchBarExamples()

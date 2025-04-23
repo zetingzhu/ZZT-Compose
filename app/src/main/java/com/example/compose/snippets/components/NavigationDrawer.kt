@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -44,6 +45,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.snippets.util.MaterialColors
 import kotlinx.coroutines.launch
 
 @Composable
@@ -51,7 +53,11 @@ fun NavigationDrawerExamples() {
     // Add more examples here in future if necessary.
 
     DetailedDrawerExample { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .background(MaterialColors.Purple300)
+        ) {
             Text(
                 "Swipe from left edge or use menu icon to open the dismissible drawer",
                 modifier = Modifier.padding(16.dp)
@@ -73,14 +79,23 @@ fun DetailedDrawerExample(
         drawerContent = {
             ModalDrawerSheet {
                 Column(
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
                     Spacer(Modifier.height(12.dp))
-                    Text("Drawer Title", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
+                    Text(
+                        "Drawer Title",
+                        modifier = Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.titleLarge
+                    )
                     HorizontalDivider()
 
-                    Text("Section 1", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        "Section 1",
+                        modifier = Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.titleMedium
+                    )
                     NavigationDrawerItem(
                         label = { Text("Item 1") },
                         selected = false,
@@ -94,7 +109,11 @@ fun DetailedDrawerExample(
 
                     HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
-                    Text("Section 2", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        "Section 2",
+                        modifier = Modifier.padding(16.dp),
+                        style = MaterialTheme.typography.titleMedium
+                    )
                     NavigationDrawerItem(
                         label = { Text("Settings") },
                         selected = false,
@@ -105,7 +124,12 @@ fun DetailedDrawerExample(
                     NavigationDrawerItem(
                         label = { Text("Help and feedback") },
                         selected = false,
-                        icon = { Icon(Icons.AutoMirrored.Outlined.Help, contentDescription = null) },
+                        icon = {
+                            Icon(
+                                Icons.AutoMirrored.Outlined.Help,
+                                contentDescription = null
+                            )
+                        },
                         onClick = { /* Handle click */ },
                     )
                     Spacer(Modifier.height(12.dp))
@@ -115,6 +139,7 @@ fun DetailedDrawerExample(
         drawerState = drawerState
     ) {
         Scaffold(
+            modifier = Modifier.background(MaterialColors.Blue50),
             topBar = {
                 TopAppBar(
                     title = { Text("Navigation Drawer Example") },

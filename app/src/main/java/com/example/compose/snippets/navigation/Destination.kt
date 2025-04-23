@@ -17,38 +17,48 @@
 package com.example.compose.snippets.navigation
 
 enum class Destination(val route: String, val title: String) {
+    ArchitectingExamples("ArchitectingExamples", "架构相关"),
+    PaddingExamples("paddingExamples", "边距修饰符"),
     BrushExamples("brushExamples", "Brush Examples"),
     ImageExamples("imageExamples", "Image Examples"),
+    CanvasExamples("canvasExamples", "Canvas 简单使用 "),
     AnimationQuickGuideExamples("animationExamples", "Animation Examples"),
     ComponentsExamples("topComponents", "Top Compose Components"),
     ScreenshotExample("screenshotExample", "Screenshot Examples"),
     ShapesExamples("shapesExamples", "Shapes Examples"),
     SharedElementExamples("sharedElement", "Shared elements"),
-    PagerExamples("pagerExamples", "Pager examples")
+    PagerExamples("pagerExamples", "Pager examples"),
+    PagerExamplesV2("pagerExamplesV2", "Pager 分页显示")
 }
 
 // Enum class for compose components navigation screen.
 enum class TopComponentsDestination(val route: String, val title: String) {
+    FlowLayoutExamples("FlowLayoutExamples", "FlowRow 或 FlowColumn 使用"),
+    CustomLayoutExamples("customLayoutExamples", "自定义布局"),
+    ButtonExamples("buttonExamples", "Button"),
     CardExamples("cardExamples", "Card"),
+    CheckboxExamples("checkboxExamples", "Checkbox"),
+    ChipExamples("chipExamples", "Chip"),
+    DatePickerExamples("datePickerExamples", "Date Pickers"),
+    DialogExamples("dialogExamples", "Dialog"),
+    DividerExamples("dividerExamples", "Dividers"),
+    FloatingActionButtonExamples("floatingActionButtonExamples", "Floating Action Button"),
+    LazyListExamples("lazyListExamples", "列表，网格"),
+    LazyListExamplesV2("lazyListExamplesV2", "列表，网格 V2"),
+    MenusExample("menusExamples", "Menus"),
+    DrawerExample("drawerExample", "抽屉式导航栏使用"),
+    NavigationDrawerExamples("navigationDrawerExamples", "Navigation drawer"),
+    ProgressIndicatorExamples("progressIndicatorExamples", "Progress Indicators"),
+
     SwitchExamples("switchExamples", "Switch"),
     SliderExamples("sliderExamples", "Slider"),
-    DialogExamples("dialogExamples", "Dialog"),
-    ChipExamples("chipExamples", "Chip"),
-    FloatingActionButtonExamples("floatingActionButtonExamples", "Floating Action Button"),
-    ButtonExamples("buttonExamples", "Button"),
-    ProgressIndicatorExamples("progressIndicatorExamples", "Progress Indicators"),
     ScaffoldExample("scaffoldExample", "Scaffold"),
     AppBarExamples("appBarExamples", "App bars"),
-    CheckboxExamples("checkboxExamples", "Checkbox"),
-    DividerExamples("dividerExamples", "Dividers"),
     BadgeExamples("badgeExamples", "Badges"),
     PartialBottomSheet("partialBottomSheets", "Partial Bottom Sheet"),
     TimePickerExamples("timePickerExamples", "Time Pickers"),
-    DatePickerExamples("datePickerExamples", "Date Pickers"),
     CarouselExamples("carouselExamples", "Carousel"),
-    MenusExample("menusExamples", "Menus"),
     TooltipExamples("tooltipExamples", "Tooltips"),
-    NavigationDrawerExamples("navigationDrawerExamples", "Navigation drawer"),
     SegmentedButtonExamples("segmentedButtonExamples", "Segmented button"),
     SwipeToDismissBoxExamples("swipeToDismissBoxExamples", "Swipe to dismiss box examples"),
     SearchBarExamples("searchBarExamples", "Search bar")

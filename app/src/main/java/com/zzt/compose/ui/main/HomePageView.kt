@@ -65,11 +65,7 @@ fun MainPage(toSettingPage: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(0.dp),
     ) {
 
-        item {
-            MessageRow(message = "Compost 布局基本知识", onClick = {
-                ActivityCompostMain.start(context)
-            })
-        }
+
         item {
             MessageRow(message = "Compost 布局基本知识", onClick = {
                 ActivityCompostMain.start(context)

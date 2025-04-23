@@ -16,17 +16,20 @@
 
 package com.example.compose.snippets.layouts
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ContextualFlowRow
 import androidx.compose.foundation.layout.ContextualFlowRowOverflow
 import androidx.compose.foundation.layout.ContextualFlowRowOverflowScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,6 +45,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -55,14 +59,80 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.compose.snippets.components.CustomCardExample
+import com.example.compose.snippets.components.ElevatedCardExample
+import com.example.compose.snippets.components.FilledCardExample
+import com.example.compose.snippets.components.OutlinedCardExample
 import com.example.compose.snippets.util.MaterialColors
+
+@Preview
+@Composable
+fun FlowLayoutExamples() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+
+        FlowRowSimpleUsageExample()
+
+
+        TextS("Arrangement.Start")
+        FlowRow_MainAxis_Default_Arrangement()
+
+        TextS("Arrangement.SpaceBetween")
+        FlowRow_MainAxis_Space_BetweenArrangement()
+        TextS("Arrangement.Center")
+        FlowRow_MainAxis_Center_Arrangement()
+        TextS("Arrangement.End")
+        FlowRow_MainAxis_End_Arrangement()
+        TextS("Arrangement.SpaceAround")
+        FlowRow_MainAxis_SpaceAround_Arrangement()
+        TextS("Arrangement.spacedBy(8.dp)")
+        FlowRow_MainAxis_Spacedby_Arrangement()
+
+        TextS("Arrangement.spacedBy(8.dp), Arrangement.Top")
+        FlowRow_MainAxis_VerticalArrangement()
+
+        TextS("Arrangement.Center")
+        FlowRow_MainAxis_VerticalArrangement_Center()
+
+        TextS("Arrangement.Bottom")
+        FlowRow_MainAxis_VerticalArrangement_Bottom()
+
+        TextS("行或列中的条目数上限 一行最大3个")
+        FlowRow_MaxItems()
+
+        Box(
+            modifier = Modifier
+                .height(400.dp)
+                .fillMaxWidth()
+        ) {
+            TextS("要显示“+”（剩余项目数）或“收起”按钮：")
+            ContextualFlowLayoutExample()
+        }
+
+        TextS("均分的 Grid 列表 设置 weight")
+        FlowLayout_Grid()
+
+        TextS("定义的 Grid 宽度")
+        FlowLayout_AlternatingGrid()
+
+        FlowLayout_FractionalSizing()
+
+        TextS("可确保同一列或行中的项占据的宽度或高度与该列/行中最大的项相同")
+        FillMaxColumnWidth()
+    }
+}
 
 @Preview
 @OptIn(ExperimentalLayoutApi::class)
 // [START android_compose_flow_row_simple]
 @Composable
 private fun FlowRowSimpleUsageExample() {
-    FlowRow(modifier = Modifier.padding(8.dp)) {
+    FlowRow(modifier = Modifier.padding(0.dp)) {
         ChipItem("Price: High to Low")
         ChipItem("Avg rating: 4+")
         ChipItem("Free breakfast")
@@ -189,6 +259,7 @@ private fun FlowRow_MainAxis_VerticalArrangement_Center() {
         FlowItems()
     }
 }
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 @Preview
@@ -222,7 +293,7 @@ private fun FlowRow_MaxItems() {
 
 // Demo items for Flow row / flow column
 @Composable
-private fun FlowItems() {
+public fun FlowItems() {
     Item(
         modifier = Modifier.width(50.dp),
         color = MaterialColors.Amber300
@@ -279,7 +350,7 @@ private fun FlowItems() {
 @Composable
 fun ChipItem(text: String, onClick: () -> Unit = {}) {
     FilterChip(
-        modifier = Modifier.padding(end = 4.dp),
+        modifier = Modifier.padding(end = 10.dp),
         onClick = onClick,
         leadingIcon = {},
         border = BorderStroke(1.dp, Color(0xFF3B3A3C)),
@@ -397,7 +468,7 @@ fun FlowLayout_Grid() {
             .weight(1f)
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialColors.Blue200)
-        repeat(rows * columns) {
+        repeat(10) {
             Spacer(modifier = itemModifier)
         }
     }
@@ -436,10 +507,38 @@ fun FlowLayout_AlternatingGrid() {
 @Composable
 fun FlowLayout_FractionalSizing() {
     // [START android_compose_flow_layout_fractional_sizing]
+    TextS("FlowRow：中间项占整个容器宽度的 0.7 部分。")
     FlowRow(
         modifier = Modifier.padding(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         maxItemsInEachRow = 3
+    ) {
+        val itemModifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+        Box(
+            modifier = itemModifier
+                .height(200.dp)
+                .width(60.dp)
+                .background(Color.Red)
+        )
+        Box(
+            modifier = itemModifier
+                .height(200.dp)
+                .fillMaxWidth(0.7f)
+                .background(Color.Blue)
+        )
+        Box(
+            modifier = itemModifier
+                .height(200.dp)
+                .weight(1f)
+                .background(Color.Magenta)
+        )
+    }
+
+    TextS("Row：中间项占据剩余 Row 宽度的 0.7%。")
+    Row(
+        modifier = Modifier.padding(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         val itemModifier = Modifier
             .clip(RoundedCornerShape(8.dp))
@@ -514,7 +613,6 @@ fun FillMaxColumnWidth() {
     // [START android_compose_flow_layouts_fill_max_column_width]
     FlowColumn(
         Modifier
-            .padding(20.dp)
             .fillMaxHeight()
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -537,8 +635,29 @@ fun FillMaxColumnWidth() {
             }
         }
     }
+
+    FlowColumn(
+        Modifier
+            .fillMaxHeight()
+            .fillMaxWidth(),
+        maxItemsInEachColumn = 5,
+    ) {
+        repeat(listDesserts.size) {
+            Box(
+                Modifier
+                    .border(1.dp, Color.DarkGray, RoundedCornerShape(8.dp))
+            ) {
+                Text(
+                    text = listDesserts[it],
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(3.dp)
+                )
+            }
+        }
+    }
     // [END android_compose_flow_layouts_fill_max_column_width]
 }
+
 private val listDesserts = listOf(
     "Apple",
     "Banana",

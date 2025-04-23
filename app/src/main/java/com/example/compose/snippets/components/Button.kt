@@ -17,8 +17,11 @@
 package com.example.compose.snippets.components
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -30,21 +33,49 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+@Preview
 @Composable
 fun ButtonExamples() {
     Column(
         modifier = Modifier
             .padding(48.dp)
             .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
+        verticalArrangement = Arrangement.spacedBy(0.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
+
+        Button(onClick = { }) {
+            Text("上")
+        }
+        Button(
+            onClick = { },
+            contentPadding = PaddingValues(0.dp)
+        ) {
+            Text("中间")
+        }
+        Text("box", modifier = Modifier.clickable {
+            Log.d("Text", "Text clicked.")
+        })
+        Button(onClick = { }) {
+            Text("下")
+        }
+
+
         Text("Filled button:")
-        FilledButtonExample(onClick = { Log.d("Filled button", "Filled button clicked.") })
+        FilledButtonExample(onClick = {
+            Log.d("Filled button", "Filled button clicked.")
+        })
         Text("Filled tonal button:")
-        FilledTonalButtonExample(onClick = { Log.d("Filled tonal button", "Filled tonal button clicked.") })
+        FilledTonalButtonExample(onClick = {
+            Log.d(
+                "Filled tonal button",
+                "Filled tonal button clicked."
+            )
+        })
         Text("Elevated button:")
         ElevatedButtonExample(onClick = { Log.d("Elevated button", "Elevated button clicked.") })
         Text("Outlined button:")

@@ -91,6 +91,10 @@ fun LinearDeterminateIndicator() {
                 progress = { currentProgress },
                 modifier = Modifier.fillMaxWidth(),
             )
+            CircularProgressIndicator(
+                progress = { currentProgress },
+                modifier = Modifier.fillMaxWidth(),
+            )
         }
     }
 }

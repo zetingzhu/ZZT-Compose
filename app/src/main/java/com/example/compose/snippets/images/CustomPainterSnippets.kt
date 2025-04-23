@@ -75,6 +75,26 @@ fun CustomPainterUsage() {
     // [END android_compose_images_custom_painter_usage]
 }
 
+@Preview
+@Composable
+fun CustomPainterModifier() {
+    // [START android_compose_custom_painter_modifier]
+    val rainbowImage = ImageBitmap.imageResource(id = R.drawable.rainbow)
+    val dogImage = ImageBitmap.imageResource(id = R.drawable.dog)
+    val customPainter = remember {
+        OverlayImagePainter(dogImage, rainbowImage)
+    }
+    Box(
+        modifier =
+            Modifier
+                .background(color = Color.Gray)
+                .padding(30.dp)
+                .background(color = Color.Yellow)
+                .paint(customPainter)
+    ) { /** intentionally empty **/ }
+    // [END android_compose_custom_painter_modifier]
+}
+
 // [START android_compose_images_custom_painter]
 class OverlayImagePainter constructor(
     private val image: ImageBitmap,
@@ -117,32 +137,13 @@ class OverlayImagePainter constructor(
     private fun validateSize(srcOffset: IntOffset, srcSize: IntSize): IntSize {
         require(
             srcOffset.x >= 0 &&
-                srcOffset.y >= 0 &&
-                srcSize.width >= 0 &&
-                srcSize.height >= 0 &&
-                srcSize.width <= image.width &&
-                srcSize.height <= image.height
+                    srcOffset.y >= 0 &&
+                    srcSize.width >= 0 &&
+                    srcSize.height >= 0 &&
+                    srcSize.width <= image.width &&
+                    srcSize.height <= image.height
         )
         return srcSize
     }
 }
 // [END android_compose_images_custom_painter]
-
-@Preview
-@Composable
-fun CustomPainterModifier() {
-    // [START android_compose_custom_painter_modifier]
-    val rainbowImage = ImageBitmap.imageResource(id = R.drawable.rainbow)
-    val dogImage = ImageBitmap.imageResource(id = R.drawable.dog)
-    val customPainter = remember {
-        OverlayImagePainter(dogImage, rainbowImage)
-    }
-    Box(
-        modifier =
-        Modifier.background(color = Color.Gray)
-            .padding(30.dp)
-            .background(color = Color.Yellow)
-            .paint(customPainter)
-    ) { /** intentionally empty **/ }
-    // [END android_compose_custom_painter_modifier]
-}

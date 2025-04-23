@@ -33,10 +33,21 @@ package com.example.compose.snippets.layouts
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.layout.Layout
@@ -45,6 +56,43 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.compose.snippets.layouts.CustomLayoutsSnippet2.firstBaselineToTop
+import com.example.compose.snippets.util.MaterialColors
+
+@Preview
+@Composable
+fun CustomLayoutExamples() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.Start,
+    ) {
+
+        TextWithPaddingToBaselinePreview()
+        TextWithNormalPaddingPreview()
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .background(MaterialColors.Blue300)
+        ) {
+            CustomLayoutsSnippet4.MyBasicColumn {
+                Text("item > 1")
+                Text("item > 2")
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .background(MaterialColors.Blue300)
+        ) {
+            CustomLayoutsSnippet5and6.CallingComposable()
+        }
+    }
+}
 
 private object CustomLayoutsSnippet1 {
     /* Can't be compiled without returning layout() from Modifier.layout. See next snippet for
@@ -91,17 +139,17 @@ private object CustomLayoutsSnippet2 {
 @Preview
 @Composable
 fun TextWithPaddingToBaselinePreview() {
-    MyApplicationTheme {
-        Text("Hi there!", Modifier.firstBaselineToTop(32.dp))
-    }
+    Text("Hi firstBaselineToTop!", Modifier.firstBaselineToTop(32.dp))
+    Text("Hi firstBaselineToTop!", Modifier.firstBaselineToTop(32.dp))
+    Text("Hi firstBaselineToTop!", Modifier.firstBaselineToTop(32.dp))
 }
 
 @Preview
 @Composable
 fun TextWithNormalPaddingPreview() {
-    MyApplicationTheme {
-        Text("Hi there!", Modifier.padding(top = 32.dp))
-    }
+    Text("Hi padding!", Modifier.padding(top = 32.dp))
+    Text("Hi padding!", Modifier.padding(top = 32.dp))
+    Text("Hi padding!", Modifier.padding(top = 32.dp))
 }
 // [END android_compose_layouts_first_baseline_usage]
 

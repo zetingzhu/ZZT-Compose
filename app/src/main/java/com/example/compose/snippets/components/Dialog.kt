@@ -74,6 +74,13 @@ fun DialogExamples() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text("Click the following button to toggle the given dialog example.")
+
+        Button(
+            onClick = { openAlertDialog.value = !openAlertDialog.value }
+        ) {
+            Text("Alert dialog component with buttons")
+        }
+
         Button(
             onClick = { openMinimalDialog.value = !openMinimalDialog.value }
         ) {
@@ -84,11 +91,7 @@ fun DialogExamples() {
         ) {
             Text("Dialog component with an image")
         }
-        Button(
-            onClick = { openAlertDialog.value = !openAlertDialog.value }
-        ) {
-            Text("Alert dialog component with buttons")
-        }
+
         Button(
             onClick = { openFullScreenDialog.value = !openFullScreenDialog.value }
         ) {

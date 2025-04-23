@@ -46,14 +46,19 @@ fun FloatingActionButtonExamples() {
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+
         Text("Floating action button:")
         Example(onClick = { Log.d("FAB", "FAB clicked.") })
+
         Text("Small floating action button:")
         SmallExample(onClick = { Log.d("FAB", "Small FAB clicked.") })
+
         Text("Large floating action button:")
         LargeExample(onClick = { Log.d("FAB", "Large FAB clicked.") })
+
         Text("Floating action button with text:")
         ExtendedExample(onClick = { Log.d("FAB", "Extended FAB clicked.") })
+
     }
 }
 

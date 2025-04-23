@@ -58,7 +58,7 @@ fun LoadingImageFromDisk() {
 fun LoadingImageFromInternetCoil() {
     // [START android_compose_images_load_internet_coil]
     AsyncImage(
-        model = "https://example.com/image.jpg",
+        model = "https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png",
         contentDescription = "Translated description of what the image contains"
     )
     // [END android_compose_images_load_internet_coil]
@@ -70,7 +70,7 @@ fun LoadingImageFromInternetCoil() {
 fun LoadingImageFromInternetGlide() {
     // [START android_compose_images_load_internet_glide]
     GlideImage(
-        model = "https://example.com/image.jpg",
+        model = "\thttps://emoji.bj.bcebos.com/yige-aigc/index_aigc/final/toolspics/pc_aigc.png",
         contentDescription = "Translated description of what the image contains"
     )
     // [END android_compose_images_load_internet_glide]

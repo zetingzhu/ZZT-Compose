@@ -17,6 +17,7 @@
 package com.example.compose.snippets.modifiers
 
 import androidx.compose.animation.core.AnimationState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -24,7 +25,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
@@ -32,7 +35,12 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -40,12 +48,64 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zzt.compose.R
+
+@Preview
+@Composable
+fun ModifierPaddingExamplesScreen() {
+    Column(Modifier.verticalScroll(rememberScrollState())) {
+        Padding.Greeting("AAA")
+        PaddingAndFill.Greeting("BBB")
+        Order1.ArtistCard()
+        Order2.ArtistCard()
+
+        Text("size")
+        Size.ArtistCard()
+
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .height(200.dp)
+                .background(Color.Blue)
+        ) {
+            Text("requiredSize")
+            RequiredSize.ArtistCard()
+        }
+
+        Text("fillMaxHeight")
+        FillMaxHeight.ArtistCard()
+
+        Text("paddingFromBaseline")
+        PaddingFromBaseline.ArtistCard(Artist("CCC", "DDD"))
+
+        HorizontalDivider()
+
+        Text(text = "Offset")
+        Offset.ArtistCard(Artist("EEE", "FFF"))
+
+        MatchParentSize.MatchParentSizeComposable()
+        Weight.ArtistCard()
+        AnimationInline.LoadingWheelAnimation()
+
+//        AnimationExtracted.LoadingWheelAnimation()
+//        UnscopedModifiers1.AuthorField()
+//        UnscopedModifiers2.AuthorList(mutableListOf(Author("GGG")))
+//        ScopedModifiers1()
+//        ScopedModifiers2()
+//        ChainingExtractedModifiers.Snippet()
+    }
+}
 
 private object Padding {
     // [START android_compose_modifiers_padding]
     @Composable
-    private fun Greeting(name: String) {
+    public fun Greeting(name: String) {
         Column(modifier = Modifier.padding(24.dp)) {
             Text(text = "Hello,")
             Text(text = name)
@@ -57,7 +117,7 @@ private object Padding {
 private object PaddingAndFill {
     // [START android_compose_modifiers_paddingandfill]
     @Composable
-    private fun Greeting(name: String) {
+    public fun Greeting(name: String) {
         Column(
             modifier = Modifier
                 .padding(24.dp)
@@ -77,14 +137,12 @@ private object Order1 {
     @Composable
     fun ArtistCard(/*...*/) {
         val padding = 16.dp
-        Column(
+        ColumnS(
             Modifier
                 .clickable(onClick = onClick)
                 .padding(padding)
                 .fillMaxWidth()
-        ) {
-            // rest of the implementation
-        }
+        )
     }
     // [END android_compose_modifiers_order1]
 }
@@ -96,14 +154,12 @@ private object Order2 {
     @Composable
     fun ArtistCard(/*...*/) {
         val padding = 16.dp
-        Column(
+        ColumnS(
             Modifier
                 .padding(padding)
                 .clickable(onClick = onClick)
                 .fillMaxWidth()
-        ) {
-            // rest of the implementation
-        }
+        )
     }
     // [END android_compose_modifiers_order2]
 }
@@ -112,12 +168,9 @@ private object Size {
     // [START android_compose_modifiers_size]
     @Composable
     fun ArtistCard(/*...*/) {
-        Row(
+        RowS(
             modifier = Modifier.size(width = 400.dp, height = 100.dp)
-        ) {
-            Image(/*...*/)
-            Column { /*...*/ }
-        }
+        )
     }
     // [END android_compose_modifiers_size]
 }
@@ -129,11 +182,11 @@ private object RequiredSize {
         Row(
             modifier = Modifier.size(width = 400.dp, height = 100.dp)
         ) {
-            Image(
+            ImageS(
                 /*...*/
                 modifier = Modifier.requiredSize(150.dp)
             )
-            Column { /*...*/ }
+            ColumnTS()
         }
     }
     // [END android_compose_modifiers_requiredsize]
@@ -146,11 +199,10 @@ private object FillMaxHeight {
         Row(
             modifier = Modifier.size(width = 400.dp, height = 100.dp)
         ) {
-            Image(
-                /*...*/
+            ImageS(
                 modifier = Modifier.fillMaxHeight()
             )
-            Column { /*...*/ }
+            ColumnTS()
         }
     }
     // [END android_compose_modifiers_fillmaxheight]
@@ -213,15 +265,12 @@ private object Weight {
         Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Image(
-                /*...*/
+            ImageS(
                 modifier = Modifier.weight(2f)
             )
-            Column(
+            ColumnTS(
                 modifier = Modifier.weight(1f)
-            ) {
-                /*...*/
-            }
+            )
         }
     }
     // [END android_compose_modifiers_weight]
@@ -302,10 +351,10 @@ private object UnscopedModifiers2 {
         .clip(CircleShape)
 
     @Composable
-    private fun AuthorList(authors: List<Author>) {
+    fun AuthorList(authors: List<Author>) {
         LazyColumn {
             items(authors) {
-                AsyncImage(
+                AsyncImageS(
                     // ...
                     modifier = reusableItemModifier,
                 )
@@ -365,7 +414,7 @@ private object ChainingExtractedModifiers {
     val otherModifier = Modifier
 
     @Composable
-    private fun Snippet() {
+    fun Snippet() {
         // Note: In a real app, you would define the modifier outside of the composable where it is
         // needed. For the snippet in the documentation, putting it in one place is clearer.
         // [START android_compose_modifiers_chainingextractedmodifiers]
@@ -385,17 +434,13 @@ private object ChainingExtractedModifiers {
 
 // ----- Classes and functions below are to simplify snippets above ----- //
 
-private data class Artist(val name: String, val lastSeenOnline: String)
-private data class Author(val name: String)
+data class Artist(val name: String, val lastSeenOnline: String)
+data class Author(val name: String)
 
-@Composable
-private fun Image(modifier: Modifier = Modifier) {
-    // Empty to allow Image(/*...*/) in snippets
-}
 
 @Composable
 private fun ArtistCard() {
-    // Empty for snippets
+    AsyncImageS()
 }
 
 @Composable
@@ -419,8 +464,30 @@ private fun SubtitleText(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun AsyncImage(modifier: Modifier = Modifier) {
-    // Empty for snippets
+private fun AsyncImageS(modifier: Modifier = Modifier) {
+    Column(
+        modifier
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                bitmap = ImageBitmap.imageResource(R.drawable.hero),
+                contentDescription = "Artist image"
+            )
+            Column {
+                Text("name ZZ")
+                Text("1 分钟前")
+            }
+        }
+        Spacer(Modifier.size(10.dp))
+        Card(
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        ) {
+            Image(
+                bitmap = ImageBitmap.imageResource(R.drawable.feathertop),
+                contentDescription = "Artist image"
+            )
+        }
+    }
 }
 
 @Composable
@@ -432,3 +499,66 @@ private fun Text1(modifier: Modifier = Modifier) {
 private fun Text2(modifier: Modifier = Modifier) {
     // Empty for snippets
 }
+
+
+@Composable
+private fun ColumnS(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                bitmap = ImageBitmap.imageResource(R.drawable.hero),
+                contentDescription = "Artist image"
+            )
+            Column {
+                Text("name")
+                Text("2 分钟前")
+            }
+        }
+        Spacer(Modifier.size(10.dp))
+        Card(
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        ) {
+            Image(
+                bitmap = ImageBitmap.imageResource(R.drawable.feathertop),
+                contentDescription = "Artist image"
+            )
+        }
+    }
+}
+
+@Composable
+private fun ColumnTS(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
+        Text("name")
+        Text("3 分钟前")
+    }
+}
+
+@Composable
+private fun RowS(modifier: Modifier = Modifier) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
+        Image(
+            bitmap = ImageBitmap.imageResource(R.drawable.hero),
+            contentDescription = "Artist image"
+        )
+        Column {
+            Text("name")
+            Text("4 分钟前")
+        }
+    }
+}
+
+@Composable
+private fun ImageS(modifier: Modifier = Modifier) {
+    Image(
+        painter = painterResource(R.drawable.hero),
+        contentDescription = null,
+        modifier = modifier
+    )
+}
+

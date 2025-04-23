@@ -19,6 +19,7 @@
 package com.example.compose.snippets.util
 
 import androidx.compose.ui.graphics.Color
+
 object MaterialColors {
     val Red50 = Color(0xFFFFEBEE)
     val Red100 = Color(0xFFFFCDD2)
@@ -162,6 +163,9 @@ object MaterialColors {
     val Yellow700 = Color(0xFFFBC02D)
     val Yellow800 = Color(0xFFF9A825)
     val Yellow900 = Color(0xFFF57F17)
+    val YellowA10 = Color(0x1AFFEB3B)
+    val YellowA30 = Color(0x4DFFEB3B)
+    val YellowA50 = Color(0x80FFEB3B)
 
     val Amber50 = Color(0xFFFFF8E1)
     val Amber100 = Color(0xFFFFECB3)

@@ -28,6 +28,7 @@ import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -39,14 +40,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.PagerSnapDistance
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -56,8 +60,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -102,6 +108,116 @@ fun PagerExamples() {
             Color.White
         )
     )
+}
+
+@Composable
+fun BoxS(content: @Composable BoxScope.() -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .height(200.dp),
+        content = content
+    )
+}
+
+@Composable
+fun TextS(text: String = "") {
+    Text(text = text, color = Color(0xFFCE0000))
+}
+
+@Composable
+fun pageS(page: String = "") {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(text = "Page: $page")
+        Text(text = "Page: $page")
+        Text(text = "Page: $page")
+        Text(text = "Page: $page")
+        Text(text = "Page: $page")
+    }
+}
+
+@Composable
+fun pageS(page: Int = 0) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(text = "Page: $page")
+        Text(text = "Page: $page")
+        Text(text = "Page: $page")
+        Text(text = "Page: $page")
+        Text(text = "Page: $page")
+    }
+}
+
+@Preview
+@Composable
+fun PagerExamplesV2() {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        BoxS {
+            HorizontalPagerSample()
+        }
+        BoxS {
+            VerticalPagerSample()
+        }
+        BoxS {
+            TextS("移动到第五个,无动画")
+            PagerScrollToItem()
+        }
+        BoxS {
+            TextS("移动到第五个，有动画")
+            PagerAnimateToItem()
+        }
+        BoxS {
+            PageChangesSample()
+        }
+        TextS("添加指示器")
+        BoxS {
+            PagerWithTabsExample()
+        }
+        BoxS {
+            TextS("添加指示器")
+            PagerIndicator()
+        }
+        BoxS {
+            TextS("真的没看明白，这有啥变化")
+            PagerWithEffect()
+        }
+        BoxS {
+            TextS("自定义页面大小")
+            PagerCustomSizes()
+        }
+        BoxS {
+            TextS("内容内边距 左边有边距 64")
+            PagerStartPadding()
+        }
+        BoxS {
+            TextS("内容内边距 水平方向左右两边有边距 32 ")
+            PagerHorizontalPadding()
+        }
+        BoxS {
+            TextS("内容内边距 右边有边距 64")
+            PagerEndPadding()
+        }
+        BoxS {
+            TextS("自定义滚动行为")
+            CustomSnapDistance()
+        }
+        BoxS {
+            TextS("创建自动滚动分页器")
+            val colors =
+                listOf(Color(0xFFFFD700), Color(0xFF00FF23), Color(0xFF0037FF), Color(0xFFFF0202))
+            AutoAdvancePager(colors)
+        }
+
+
+        BoxS {
+            PagerWithTabs()
+        }
+
+    }
 }
 
 @Preview
@@ -208,6 +324,10 @@ fun PagerAnimateToItem() {
 @Preview
 @Composable
 fun PageChangesSample() {
+    var textStr by remember {
+        mutableStateOf("接收有关页面状态更改的通知")
+    }
+    TextS(text = textStr)
     // [START android_compose_layouts_pager_notify_page_changes]
     val pagerState = rememberPagerState(pageCount = {
         10
@@ -219,13 +339,20 @@ fun PageChangesSample() {
             // Do something with each page change, for example:
             // viewModel.sendPageSelectedEvent(page)
             Log.d("Page change", "Page changed to $page")
+            textStr = "Page changed to $page"
         }
     }
 
     VerticalPager(
         state = pagerState,
     ) { page ->
-        Text(text = "Page: $page")
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(text = "Page: $page")
+            Text(text = "Page: $page")
+            Text(text = "Page: $page")
+            Text(text = "Page: $page")
+            Text(text = "Page: $page")
+        }
     }
     // [END android_compose_layouts_pager_notify_page_changes]
 }
@@ -256,7 +383,15 @@ fun PagerWithTabsExample() {
     HorizontalPager(
         state = pagerState,
     ) { page ->
-        Text("Page: ${pages[page]}")
+        Column {
+            Text("Page: ${pages[page]}")
+            Text("Page: ${pages[page]}")
+            Text("Page: ${pages[page]}")
+            Text("Page: ${pages[page]}")
+            Text("Page: ${pages[page]}")
+            Text("Page: ${pages[page]}")
+            Text("Page: ${pages[page]}")
+        }
     }
     // [END android_compose_layouts_pager_tabs]
 }
@@ -277,9 +412,9 @@ fun PagerWithEffect() {
                     // scroll position. We use the absolute value which allows us to mirror
                     // any effects for both directions
                     val pageOffset = (
-                        (pagerState.currentPage - page) + pagerState
-                            .currentPageOffsetFraction
-                        ).absoluteValue
+                            (pagerState.currentPage - page) + pagerState
+                                .currentPageOffsetFraction
+                            ).absoluteValue
 
                     // We animate the alpha, between 50% and 100%
                     alpha = lerp(
@@ -307,6 +442,7 @@ fun PagerStartPadding() {
         contentPadding = PaddingValues(start = 64.dp),
     ) { page ->
         // page content
+        pageS(page)
     }
     // [END android_compose_layouts_pager_padding_start]
 }
@@ -323,6 +459,7 @@ fun PagerHorizontalPadding() {
         contentPadding = PaddingValues(horizontal = 32.dp),
     ) { page ->
         // page content
+        pageS(page)
     }
     // [END android_compose_layouts_pager_padding_horizontal]
 }
@@ -339,6 +476,7 @@ fun PagerEndPadding() {
         contentPadding = PaddingValues(end = 64.dp),
     ) { page ->
         // page content
+        pageS(page)
     }
     // [END android_compose_layouts_pager_padding_end]
 }
@@ -355,6 +493,7 @@ fun PagerCustomSizes() {
         pageSize = PageSize.Fixed(100.dp)
     ) { page ->
         // page content
+        pageS(page)
     }
     // [END android_compose_layouts_pager_custom_size]
 }
@@ -370,9 +509,11 @@ fun PagerWithTabs() {
         state = pagerState,
     ) { page ->
         // page content
+        pageS(page)
     }
     // [END android_compose_layouts_pager_with_tabs]
 }
+
 @Preview
 @Composable
 fun PagerIndicator() {
@@ -399,7 +540,8 @@ fun PagerIndicator() {
             horizontalArrangement = Arrangement.Center
         ) {
             repeat(pagerState.pageCount) { iteration ->
-                val color = if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
+                val color =
+                    if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
                 Box(
                     modifier = Modifier
                         .padding(2.dp)
@@ -524,14 +666,14 @@ private fun CustomSnapDistance() {
 
     val fling = PagerDefaults.flingBehavior(
         state = pagerState,
-        pagerSnapDistance = PagerSnapDistance.atMost(10)
+        pagerSnapDistance = PagerSnapDistance.atMost(2)
     )
 
     Column(modifier = Modifier.fillMaxSize()) {
         HorizontalPager(
             state = pagerState,
-            pageSize = PageSize.Fixed(200.dp),
-            beyondViewportPageCount = 10,
+            pageSize = PageSize.Fixed(150.dp),
+            beyondViewportPageCount = 2,
             flingBehavior = fling
         ) {
             PagerSampleItem(page = it)

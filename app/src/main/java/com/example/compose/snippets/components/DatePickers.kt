@@ -102,7 +102,9 @@ fun DatePickerExamples() {
         Button(onClick = { showModalInput = true }) {
             Text("Show Modal Input Date Picker")
         }
-// [END_EXCLUDE]
+
+        // [END_EXCLUDE]
+
         if (selectedDate != null) {
             val date = Date(selectedDate!!)
             val formattedDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(date)
@@ -110,7 +112,8 @@ fun DatePickerExamples() {
         } else {
             Text("No date selected")
         }
-// [START_EXCLUDE]
+
+        // [START_EXCLUDE]
 
         Text("Date range pickers:")
 
@@ -121,8 +124,10 @@ fun DatePickerExamples() {
         if (selectedDateRange.first != null && selectedDateRange.second != null) {
             val startDate = Date(selectedDateRange.first!!)
             val endDate = Date(selectedDateRange.second!!)
-            val formattedStartDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(startDate)
-            val formattedEndDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(endDate)
+            val formattedStartDate =
+                SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(startDate)
+            val formattedEndDate =
+                SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(endDate)
             Text("Selected date range: $formattedStartDate - $formattedEndDate")
         } else {
             Text("No date range selected")

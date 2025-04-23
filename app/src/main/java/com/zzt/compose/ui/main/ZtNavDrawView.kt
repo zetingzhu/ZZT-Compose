@@ -1,5 +1,6 @@
 package com.zzt.compose.ui.main
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -10,23 +11,29 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Send
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * @author: zeting
  * @date: 2025/4/14
  *
  */
+@Preview
 @Composable
-fun ZtNavDrawView() {
+fun ZtNavDrawView(scope: CoroutineScope? = null, drawerState: DrawerState? = null) {
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -35,7 +42,13 @@ fun ZtNavDrawView() {
         Spacer(Modifier.height(12.dp))
         Text(
             "侧边栏标题",
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .clickable {
+                    scope?.launch {
+                        drawerState?.close()
+                    }
+                },
             style = MaterialTheme.typography.titleLarge
         )
         HorizontalDivider()

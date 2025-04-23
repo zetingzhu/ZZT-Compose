@@ -75,6 +75,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import com.example.compose.snippets.layouts.TextS
 import com.example.compose.snippets.util.randomSampleImageUrl
 import kotlin.random.Random
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -82,6 +83,41 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.w3c.dom.Text
+
+
+@Preview
+@Composable
+fun LazyListExamples() {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+
+        TextS("延迟列表")
+        Box(modifier = Modifier.height(300.dp)) {
+            ListsSnippetsLazyListScope1()
+        }
+
+        TextS("延迟网格")
+        Box(modifier = Modifier.height(300.dp)) {
+            GridItemSpanExample()
+        }
+
+        TextS("延迟加载列表网格")
+        Box(modifier = Modifier.height(300.dp)) {
+            LazyStaggeredGridSnippet()
+        }
+
+        TextS("延迟加载交错网格")
+        Box(modifier = Modifier.height(300.dp)) {
+            LazyStaggeredGridSnippetFixed()
+        }
+
+    }
+}
 
 private object ListsSnippetsColumn {
     // [START android_compose_layouts_list_column]
@@ -133,6 +169,7 @@ private object ListsSnippetsLazyListScope2 {
         // [END android_compose_layouts_lazy_column_basic_extension]
     }
 }
+
 @Composable
 private fun GridItemSpanExample() {
     // [START android_compose_layouts_lazy_vertical_grid_full_span]
@@ -150,9 +187,11 @@ private fun GridItemSpanExample() {
     }
     // [END android_compose_layouts_lazy_vertical_grid_full_span]
 }
+
 @Composable
 private fun CategoryCard(category: String) {
 }
+
 @Composable
 private fun ListsSnippetsContentPadding() {
     // [START android_compose_layouts_lazy_column_padding]
@@ -386,7 +425,9 @@ private object ListsSnippetsItemKeys {
         // [END android_compose_layouts_lazy_column_item_keys]
     }
 }
+
 data class Book(val id: String)
+
 @Composable
 private fun LazyColumnRemembered() {
     val books = remember {
@@ -464,7 +505,10 @@ private fun LazyItemAnimationWithSpec() {
                 Modifier.animateItem(
                     fadeInSpec = tween(durationMillis = 250),
                     fadeOutSpec = tween(durationMillis = 100),
-                    placementSpec = spring(stiffness = Spring.StiffnessLow, dampingRatio = Spring.DampingRatioMediumBouncy)
+                    placementSpec = spring(
+                        stiffness = Spring.StiffnessLow,
+                        dampingRatio = Spring.DampingRatioMediumBouncy
+                    )
                 )
             ) {
                 // ...
@@ -503,6 +547,7 @@ private object LazyListTipSnippets {
         }
         // [END android_compose_layouts_lazy_item_nested_scrollable_dont]
     }
+
     @Composable
     private fun NestingScrollableComponents() {
         val data = remember {
@@ -599,9 +644,11 @@ private object LazyGridTipSnippets {
         }
         // [END android_compose_layouts_lazy_grid_multiple_elements_divider]
     }
+
     @Composable
     private fun Item(id: Int) {
     }
+
     @Composable
     private fun Divider() {
     }
@@ -664,6 +711,7 @@ fun LazyStaggeredGridSnippet() {
     )
     // [END android_compose_layouts_lazy_staggered_grid_adaptive]
 }
+
 @Preview
 @Composable
 fun LazyStaggeredGridSnippetFixed() {
@@ -688,13 +736,16 @@ fun LazyStaggeredGridSnippetFixed() {
     )
     // [END android_compose_layouts_lazy_staggered_grid_fixed]
 }
+
 class Message(val id: Long, val sender: String, val text: String)
 private class Item
 
 private data class Contact(val firstName: String)
+
 private val contacts = listOf<Contact>()
 
 private class Photo
+
 private val photos = listOf<Photo>()
 
 @Composable
@@ -726,6 +777,7 @@ private object MyAnalyticsService {
 }
 
 private class ContentTypeElement(val type: Long)
+
 private val elements = listOf<ContentTypeElement>()
 
 private val randomSizedPhotos = listOf(
@@ -756,6 +808,7 @@ private val randomSizedPhotos = listOf(
     randomSampleImageUrl(width = 1600, height = 900),
     randomSampleImageUrl(width = 500, height = 500),
 )
+
 // [START android_compose_layouts_lazily_load_list]
 @Composable
 fun MessageList(

@@ -38,27 +38,20 @@ import com.example.compose.snippets.navigation.TopComponentsDestination
 fun ComponentsScreen(
     navigate: (TopComponentsDestination) -> Unit
 ) {
-    Scaffold(topBar = {
-        TopAppBar(title = {
-            Text("Common Components")
-        })
-    }, content = { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            items(TopComponentsDestination.entries) { destination ->
-                NavigationItem(destination) {
-                    navigate(
-                        destination
-                    )
-                }
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        items(TopComponentsDestination.entries) { destination ->
+            NavigationItem(destination) {
+                navigate(
+                    destination
+                )
             }
         }
-    })
+    }
 }
 
 @Composable
