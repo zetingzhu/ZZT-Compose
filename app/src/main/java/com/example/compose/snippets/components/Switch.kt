@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.snippets.util.MaterialColors
 
 @Preview
 @Composable
@@ -53,6 +54,7 @@ fun SwitchExamples() {
         SwitchMinimalExample()
         Text("Switch with label")
         SwitchWithLabelMinimalExample()
+
         Text("Switch with icon")
         SwitchWithIconExample()
         Text("Switch with custom colors")
@@ -136,10 +138,10 @@ fun SwitchWithCustomColors() {
             checked = it
         },
         colors = SwitchDefaults.colors(
-            checkedThumbColor = MaterialTheme.colorScheme.primary,
-            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-            uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
+            checkedThumbColor = MaterialColors.Red100,
+            checkedTrackColor = MaterialColors.Blue700,
+            uncheckedThumbColor = MaterialColors.Yellow400,
+            uncheckedTrackColor = MaterialColors.Green600,
         )
     )
 }

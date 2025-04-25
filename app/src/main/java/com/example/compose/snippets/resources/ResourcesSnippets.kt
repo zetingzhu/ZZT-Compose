@@ -22,10 +22,15 @@ import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,7 +49,47 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import com.zzt.compose.R
+
+
+@Preview
+@Composable
+fun ResourceExample() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        Text("字符串")
+        Strings()
+
+        HorizontalDivider()
+
+        Text("尺寸")
+        Dimensions()
+        HorizontalDivider()
+
+        Text("颜色")
+        Colors()
+        Text("矢量资源和图像资源")
+        VectorAssets()
+
+        HorizontalDivider()
+        Text("带动画的矢量可绘制对象")
+        AnimatedVectorDrawables()
+
+        HorizontalDivider()
+        Text("图标")
+        Icons()
+
+        HorizontalDivider()
+        CraneTheme() {
+            Text("字体")
+        }
+    }
+}
+
 
 @Composable
 fun Strings() {

@@ -19,8 +19,10 @@ package com.example.compose.snippets.layouts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -71,6 +73,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.snippets.util.MaterialColors
 import kotlinx.coroutines.launch
+import javax.sql.RowSet
 
 
 @Preview
@@ -456,4 +459,33 @@ fun BottomSheetDemo() {
         }
     }
     // [END android_compose_layout_material_bottom_sheet2]
+}
+
+@Composable
+fun Box300(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+    Box(modifier = modifier.height(300.dp), content = content)
+}
+
+@Preview
+@Composable
+fun SnackbarExamples() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+
+        Box300() {
+            ScaffoldSnackbarDemo()
+        }
+        HorizontalDivider()
+
+
+        Box300() {
+            ScaffoldSnackbarResultDemo()
+        }
+        HorizontalDivider()
+
+    }
 }

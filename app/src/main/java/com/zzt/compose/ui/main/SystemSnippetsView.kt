@@ -33,9 +33,16 @@ import com.example.compose.snippets.components.DatePickerExamples
 import com.example.compose.snippets.components.DialogExamples
 import com.example.compose.snippets.components.DividerExamples
 import com.example.compose.snippets.components.FloatingActionButtonExamples
+import com.example.compose.snippets.components.ImageShapeScreen
 import com.example.compose.snippets.components.MenusExamples
 import com.example.compose.snippets.components.PartialBottomSheet
 import com.example.compose.snippets.components.ProgressIndicatorExamples
+import com.example.compose.snippets.components.PullScreen
+import com.example.compose.snippets.components.PullToRefreshBasicPreview
+import com.example.compose.snippets.components.PullToRefreshCustomIndicatorPreview
+import com.example.compose.snippets.components.PullToRefreshCustomStylePreview
+import com.example.compose.snippets.components.RadioButtonSingleSelection
+import com.example.compose.snippets.components.RadioButtonSingleSelectionPreview
 import com.example.compose.snippets.components.ScaffoldExample
 import com.example.compose.snippets.components.SearchBarExamples
 import com.example.compose.snippets.components.SegmentedButtonExamples
@@ -44,15 +51,21 @@ import com.example.compose.snippets.components.SwipeToDismissBoxExamples
 import com.example.compose.snippets.components.TimePickerExamples
 import com.example.compose.snippets.components.TooltipExamples
 import com.example.compose.snippets.graphics.CanvasExamplesScreen
+import com.example.compose.snippets.graphics.ModifierDrawWithContent
+import com.example.compose.snippets.images.ImageBitmapSnippets
 import com.example.compose.snippets.layouts.CustomLayoutExamples
 import com.example.compose.snippets.layouts.DrawerExample
 import com.example.compose.snippets.layouts.FlowLayoutExamples
 import com.example.compose.snippets.layouts.PagerExamples
 import com.example.compose.snippets.layouts.PagerExamplesV2
+import com.example.compose.snippets.layouts.SnackbarExamples
 import com.example.compose.snippets.lists.AnimatedOrderedListScreenPreview
 import com.example.compose.snippets.lists.LazyListExamples
 import com.example.compose.snippets.modifiers.ModifierPaddingExamplesScreen
+import com.example.compose.snippets.navigation.ImageShapeComponents
+import com.example.compose.snippets.navigation.PullToRefreshComponents
 import com.example.compose.snippets.navigation.TopComponentsDestination
+import com.example.compose.snippets.resources.ResourceExample
 
 /**
  * @author: zeting
@@ -76,8 +89,12 @@ fun SystemPage() {
                         Destination.ArchitectingExamples -> ArchitectingExamplesScreen()
                         Destination.PaddingExamples -> ModifierPaddingExamplesScreen()
                         Destination.BrushExamples -> BrushExamplesScreen()
-                        Destination.ImageExamples -> ImageExamplesScreen()
-                        Destination.CanvasExamples -> CanvasExamplesScreen()
+                        Destination.ImageShapeExamples -> ImageShapeScreen {
+                            navController.navigate(
+                                it.route
+                            )
+                        }
+
                         Destination.AnimationQuickGuideExamples -> AnimationExamplesScreen()
                         Destination.ScreenshotExample -> BitmapFromComposableFullSnippet()
                         Destination.ComponentsExamples -> ComponentsScreen {
@@ -90,9 +107,17 @@ fun SystemPage() {
                         Destination.SharedElementExamples -> PlaceholderSizeAnimated_Demo()
                         Destination.PagerExamples -> PagerExamples()
                         Destination.PagerExamplesV2 -> PagerExamplesV2()
+                        Destination.PullToRefreshExamples -> PullScreen {
+                            navController.navigate(
+                                it.route
+                            )
+                        }
+
+                        Destination.ResourceExamples -> ResourceExample()
                     }
                 }
             }
+
             TopComponentsDestination.entries.forEach { destination ->
                 composable(destination.route) {
                     when (destination) {
@@ -104,8 +129,6 @@ fun SystemPage() {
                         TopComponentsDestination.ChipExamples -> ChipExamples()
                         TopComponentsDestination.DatePickerExamples -> DatePickerExamples()
                         TopComponentsDestination.DialogExamples -> DialogExamples()
-                        TopComponentsDestination.SwitchExamples -> SwitchExamples()
-                        TopComponentsDestination.SliderExamples -> SliderExamples()
                         TopComponentsDestination.FloatingActionButtonExamples -> FloatingActionButtonExamples()
                         TopComponentsDestination.LazyListExamples -> LazyListExamples()
                         TopComponentsDestination.LazyListExamplesV2 -> AnimatedOrderedListScreenPreview()
@@ -113,21 +136,45 @@ fun SystemPage() {
                         TopComponentsDestination.DrawerExample -> DrawerExample()
                         TopComponentsDestination.NavigationDrawerExamples -> NavigationDrawerExamples()
                         TopComponentsDestination.ProgressIndicatorExamples -> ProgressIndicatorExamples()
-
+                        TopComponentsDestination.RadioButtonExamples -> RadioButtonSingleSelectionPreview()
                         TopComponentsDestination.ScaffoldExample -> ScaffoldExample()
+                        TopComponentsDestination.SearchBarExamples -> SearchBarExamples()
+                        TopComponentsDestination.SliderExamples -> SliderExamples()
+                        TopComponentsDestination.SnackbarExamples -> SnackbarExamples()
+                        TopComponentsDestination.SwitchExamples -> SwitchExamples()
+                        TopComponentsDestination.TimePickerExamples -> TimePickerExamples()
                         TopComponentsDestination.AppBarExamples -> AppBarExamples {
                             navController.popBackStack()
                         }
 
                         TopComponentsDestination.DividerExamples -> DividerExamples()
+                        TopComponentsDestination.SegmentedButtonExamples -> SegmentedButtonExamples()
                         TopComponentsDestination.BadgeExamples -> BadgeExamples()
                         TopComponentsDestination.PartialBottomSheet -> PartialBottomSheet()
-                        TopComponentsDestination.TimePickerExamples -> TimePickerExamples()
                         TopComponentsDestination.CarouselExamples -> CarouselExamples()
                         TopComponentsDestination.TooltipExamples -> TooltipExamples()
-                        TopComponentsDestination.SegmentedButtonExamples -> SegmentedButtonExamples()
                         TopComponentsDestination.SwipeToDismissBoxExamples -> SwipeToDismissBoxExamples()
-                        TopComponentsDestination.SearchBarExamples -> SearchBarExamples()
+                    }
+                }
+            }
+
+            PullToRefreshComponents.entries.forEach { destination ->
+                composable(destination.route) {
+                    when (destination) {
+                        PullToRefreshComponents.PullToRefreshV1 -> PullToRefreshBasicPreview()
+                        PullToRefreshComponents.PullToRefreshV2 -> PullToRefreshCustomStylePreview()
+                        PullToRefreshComponents.PullToRefreshV3 -> PullToRefreshCustomIndicatorPreview()
+                    }
+                }
+            }
+
+            ImageShapeComponents.entries.forEach { destination ->
+                composable(destination.route) {
+                    when (destination) {
+                        ImageShapeComponents.ImageExamples -> ImageExamplesScreen()
+                        ImageShapeComponents.ImageBitmapVectorExamples -> ImageBitmapSnippets()
+                        ImageShapeComponents.CanvasExamples -> CanvasExamplesScreen()
+                        ImageShapeComponents.CanvasDrawExamples -> ModifierDrawWithContent()
                     }
                 }
             }

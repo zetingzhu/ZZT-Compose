@@ -48,8 +48,10 @@ fun SliderExamples() {
     ) {
         Text("Minimal slider component")
         SliderMinimalExample()
+
         Text("Advanced slider component")
         SliderAdvancedExample()
+
         Text("Range slider component")
         RangeSliderExample()
     }

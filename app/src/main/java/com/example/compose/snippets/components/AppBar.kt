@@ -125,10 +125,10 @@ fun AppBarOptions(
             Text("Large top bar")
         }
         Button({ toTopBarNavigation() }) {
-            Text("Top bar navigation example")
+            Text("Top bar navigation example，从顶部应用栏导航")
         }
         Button({ toMultiSelection() }) {
-            Text("Top bar with multi selection list")
+            Text("Top bar with multi selection list，实现动态顶部应用栏行为")
         }
     }
 }

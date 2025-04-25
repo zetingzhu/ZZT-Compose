@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,13 +32,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.compose.snippets.navigation.ImageShapeComponents
+import com.example.compose.snippets.navigation.PullToRefreshComponents
 import com.example.compose.snippets.navigation.TopComponentsDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ComponentsScreen(
-    navigate: (TopComponentsDestination) -> Unit
-) {
+fun ComponentsScreen(navigate: (TopComponentsDestination) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -50,6 +51,7 @@ fun ComponentsScreen(
                     destination
                 )
             }
+            HorizontalDivider()
         }
     }
 }
@@ -65,3 +67,55 @@ fun NavigationItem(destination: TopComponentsDestination, onClick: () -> Unit) {
         }
     )
 }
+
+
+@Composable
+fun PullScreen(navigate: (PullToRefreshComponents) -> Unit) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        items(PullToRefreshComponents.entries) { destination ->
+            ListItem(
+                headlineContent = {
+                    Text(destination.title)
+                },
+                modifier = Modifier.clickable {
+                    navigate(
+                        destination
+                    )
+                }
+            )
+            HorizontalDivider()
+        }
+    }
+}
+
+
+
+@Composable
+fun ImageShapeScreen(navigate: (ImageShapeComponents) -> Unit) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        items(ImageShapeComponents.entries) { destination ->
+            ListItem(
+                headlineContent = {
+                    Text(destination.title)
+                },
+                modifier = Modifier.clickable {
+                    navigate(
+                        destination
+                    )
+                }
+            )
+            HorizontalDivider()
+        }
+    }
+}
+

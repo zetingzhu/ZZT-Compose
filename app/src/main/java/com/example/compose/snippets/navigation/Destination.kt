@@ -20,46 +20,64 @@ enum class Destination(val route: String, val title: String) {
     ArchitectingExamples("ArchitectingExamples", "架构相关"),
     PaddingExamples("paddingExamples", "边距修饰符"),
     BrushExamples("brushExamples", "Brush Examples"),
-    ImageExamples("imageExamples", "Image Examples"),
-    CanvasExamples("canvasExamples", "Canvas 简单使用 "),
+    ImageShapeExamples("ImageShapeExamples", "Image Shape Examples 图片形状"),
     AnimationQuickGuideExamples("animationExamples", "Animation Examples"),
     ComponentsExamples("topComponents", "Top Compose Components"),
     ScreenshotExample("screenshotExample", "Screenshot Examples"),
     ShapesExamples("shapesExamples", "Shapes Examples"),
     SharedElementExamples("sharedElement", "Shared elements"),
     PagerExamples("pagerExamples", "Pager examples"),
-    PagerExamplesV2("pagerExamplesV2", "Pager 分页显示")
+    PagerExamplesV2("pagerExamplesV2", "Pager 分页显示"),
+    PullToRefreshExamples("pullComponents", "下拉刷新"),
+    ResourceExamples("resourceExamples", "资源 Resource 使用"),
 }
 
 // Enum class for compose components navigation screen.
 enum class TopComponentsDestination(val route: String, val title: String) {
     FlowLayoutExamples("FlowLayoutExamples", "FlowRow 或 FlowColumn 使用"),
     CustomLayoutExamples("customLayoutExamples", "自定义布局"),
+    AppBarExamples("appBarExamples", "App bars 应用栏"),
     ButtonExamples("buttonExamples", "Button"),
-    CardExamples("cardExamples", "Card"),
-    CheckboxExamples("checkboxExamples", "Checkbox"),
-    ChipExamples("chipExamples", "Chip"),
-    DatePickerExamples("datePickerExamples", "Date Pickers"),
-    DialogExamples("dialogExamples", "Dialog"),
-    DividerExamples("dividerExamples", "Dividers"),
+    CardExamples("cardExamples", "Card 卡"),
+    CheckboxExamples("checkboxExamples", "Checkbox 复选框"),
+    ChipExamples("chipExamples", "Chip 条状标签"),
+    DatePickerExamples("datePickerExamples", "Date Pickers 日期选择框"),
+    DialogExamples("dialogExamples", "Dialog 对话框"),
+    DividerExamples("dividerExamples", "Dividers 分割线"),
     FloatingActionButtonExamples("floatingActionButtonExamples", "Floating Action Button"),
     LazyListExamples("lazyListExamples", "列表，网格"),
     LazyListExamplesV2("lazyListExamplesV2", "列表，网格 V2"),
     MenusExample("menusExamples", "Menus"),
     DrawerExample("drawerExample", "抽屉式导航栏使用"),
     NavigationDrawerExamples("navigationDrawerExamples", "Navigation drawer"),
-    ProgressIndicatorExamples("progressIndicatorExamples", "Progress Indicators"),
-
-    SwitchExamples("switchExamples", "Switch"),
-    SliderExamples("sliderExamples", "Slider"),
+    ProgressIndicatorExamples("progressIndicatorExamples", "Progress Indicators 进度条"),
+    RadioButtonExamples("radioButtonExamples", "单选按钮"),
     ScaffoldExample("scaffoldExample", "Scaffold"),
-    AppBarExamples("appBarExamples", "App bars"),
-    BadgeExamples("badgeExamples", "Badges"),
-    PartialBottomSheet("partialBottomSheets", "Partial Bottom Sheet"),
-    TimePickerExamples("timePickerExamples", "Time Pickers"),
-    CarouselExamples("carouselExamples", "Carousel"),
+    SegmentedButtonExamples("segmentedButtonExamples", "Segmented button 分段按钮"),
+    SliderExamples("sliderExamples", "Slider 滑块"),
+    SnackbarExamples("SnackbarExamples", "Snackbar 快捷信息栏"),
+    SwitchExamples("switchExamples", "Switch 切换"),
+    TimePickerExamples("timePickerExamples", "Time Pickers 时间选择"),
+    BadgeExamples("badgeExamples", "Badges 标志"),
+    PartialBottomSheet("partialBottomSheets", "Partial Bottom Sheet 部分底部动作条"),
+
+    CarouselExamples("carouselExamples", "Carousel 轮播"),
     TooltipExamples("tooltipExamples", "Tooltips"),
-    SegmentedButtonExamples("segmentedButtonExamples", "Segmented button"),
     SwipeToDismissBoxExamples("swipeToDismissBoxExamples", "Swipe to dismiss box examples"),
-    SearchBarExamples("searchBarExamples", "Search bar")
+
+
+    SearchBarExamples("searchBarExamples", "Search bar, 不好用，看起来好多东西"),
+}
+
+enum class PullToRefreshComponents(val route: String, val title: String) {
+    PullToRefreshV1("pullToRefreshExamplesV1", "下拉刷新 V1"),
+    PullToRefreshV2("pullToRefreshExamplesV2", "下拉刷新 V2"),
+    PullToRefreshV3("pullToRefreshExamplesV3", "下拉刷新 V2"),
+}
+
+enum class ImageShapeComponents(val route: String, val title: String) {
+    ImageExamples("imageExamples", "Image Examples"),
+    ImageBitmapVectorExamples("ImageBitmapVectorExamples", "ImageBitmap 与 ImageVector"),
+    CanvasExamples("canvasExamples", "Canvas 简单使用 "),
+    CanvasDrawExamples("CanvasDrawExamples", "Canvas 绘制修饰符，手电筒效果"),
 }

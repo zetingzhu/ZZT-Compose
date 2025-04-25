@@ -16,6 +16,7 @@
 
 package com.example.compose.snippets.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +24,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -34,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.util.Util
 
 // [START android_compose_components_radiobuttonsingleselection]
 @Composable
@@ -66,12 +69,45 @@ fun RadioButtonSingleSelection(modifier: Modifier = Modifier) {
                 )
             }
         }
+
+
+        /**
+         * 解构 (Destructuring)
+         * 这个解构没看懂原理
+         * interface MutableState<T> : State<T> {
+         *     override var value: T
+         *     operator fun component1(): T
+         *     operator fun component2(): (T) -> Unit
+         * }
+         * 原型就是 这个方法，
+         */
+        val (a, b) = remember { mutableStateOf("AB") }
+        val c = remember { mutableStateOf("C") }
+        val (d, f: (String) -> Unit) = remember { mutableStateOf("DE") }
+        Button(onClick = {
+            b("SSS")
+
+            Log.d("ZZZ", ">>" + a + " > " + b)
+        }, modifier = Modifier) {
+            Text("AB>" + a)
+        }
+        Button(onClick = {
+            c.value = "GGG"
+        }, modifier = Modifier) {
+            Text("C>" + c.value)
+        }
+        Button(onClick = {
+            f("HHHH")
+        }, modifier = Modifier) {
+            Text("DE>" + d)
+        }
     }
+
 }
 // [END android_compose_components_radiobuttonsingleselection]
 
 @Preview
 @Composable
-private fun RadioButtonSingleSelectionPreview() {
+fun RadioButtonSingleSelectionPreview() {
     RadioButtonSingleSelection()
 }

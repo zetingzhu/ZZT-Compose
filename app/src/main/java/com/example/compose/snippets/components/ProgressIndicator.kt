@@ -18,10 +18,16 @@ package com.example.compose.snippets.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
@@ -35,8 +41,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.snippets.util.MaterialColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -52,10 +60,13 @@ fun ProgressIndicatorExamples() {
     ) {
         Text("Determinate linear indicator:")
         LinearDeterminateIndicator()
+
         Text("Indeterminate linear indicator:")
         IndeterminateLinearIndicator()
+
         Text("Determinate circular indicator:")
         CircularDeterminateIndicator()
+
         Text("Indeterminate circular indicator:")
         IndeterminateCircularIndicator()
     }
@@ -72,7 +83,8 @@ fun LinearDeterminateIndicator() {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
     ) {
         Button(onClick = {
             loading = true
@@ -93,7 +105,9 @@ fun LinearDeterminateIndicator() {
             )
             CircularProgressIndicator(
                 progress = { currentProgress },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(100.dp)
             )
         }
     }
@@ -107,6 +121,24 @@ suspend fun loadProgress(updateProgress: (Float) -> Unit) {
     }
 }
 // [END android_compose_components_determinateindicator]
+
+@Preview
+@Composable
+fun IndeterminateLinearIndicator() {
+    var loading by remember { mutableStateOf(false) }
+
+    Button(onClick = { loading = true }, enabled = !loading) {
+        Text("Start loading")
+    }
+
+    if (!loading) return
+
+    LinearProgressIndicator(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.secondary,
+        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+    )
+}
 
 @Preview
 @Composable
@@ -136,27 +168,11 @@ fun CircularDeterminateIndicator() {
             CircularProgressIndicator(
                 progress = { currentProgress },
                 modifier = Modifier.width(64.dp),
+                color = MaterialColors.Red100,
+                trackColor = MaterialColors.Blue400,
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun IndeterminateLinearIndicator() {
-    var loading by remember { mutableStateOf(false) }
-
-    Button(onClick = { loading = true }, enabled = !loading) {
-        Text("Start loading")
-    }
-
-    if (!loading) return
-
-    LinearProgressIndicator(
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.secondary,
-        trackColor = MaterialTheme.colorScheme.surfaceVariant,
-    )
 }
 
 @Preview
@@ -173,8 +189,8 @@ fun IndeterminateCircularIndicator() {
 
     CircularProgressIndicator(
         modifier = Modifier.width(64.dp),
-        color = MaterialTheme.colorScheme.secondary,
-        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+        color = MaterialColors.Red100,
+        trackColor = MaterialColors.Blue400,
     )
 }
 // [END android_compose_components_indeterminateindicator]

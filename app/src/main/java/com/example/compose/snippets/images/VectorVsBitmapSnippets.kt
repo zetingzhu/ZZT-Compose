@@ -55,6 +55,11 @@ fun ImageBitmapSnippets() {
     // [START android_compose_images_bitmap_simple]
     val imageBitmap = ImageBitmap.imageResource(R.drawable.dog)
     // [END android_compose_images_bitmap_simple]
+
+    Image(
+        painter = painterResource(id = R.drawable.baseline_shopping_cart_24),
+        contentDescription = stringResource(id = R.string.shopping_cart_content_desc)
+    )
 }
 
 @Preview

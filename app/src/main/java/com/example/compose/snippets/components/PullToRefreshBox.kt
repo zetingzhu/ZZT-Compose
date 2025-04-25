@@ -52,6 +52,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.snippets.components.PullToRefreshIndicatorConstants.CROSSFADE_DURATION_MILLIS
 import com.example.compose.snippets.components.PullToRefreshIndicatorConstants.SPINNER_SIZE
+import com.example.compose.snippets.util.MaterialColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -130,8 +131,8 @@ fun PullToRefreshCustomStyleSample(
             Indicator(
                 modifier = Modifier.align(Alignment.TopCenter),
                 isRefreshing = isRefreshing,
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                containerColor = MaterialColors.Red100,
+                color = MaterialColors.Blue700,
                 state = state
             )
         },
@@ -190,7 +191,7 @@ fun MyCustomIndicator(
         modifier = modifier.pullToRefreshIndicator(
             state = state,
             isRefreshing = isRefreshing,
-            containerColor = PullToRefreshDefaults.containerColor,
+            containerColor = MaterialColors.Red100,
             threshold = PositionalThreshold
         ),
         contentAlignment = Alignment.Center
