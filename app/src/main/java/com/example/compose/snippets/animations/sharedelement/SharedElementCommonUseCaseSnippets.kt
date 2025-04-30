@@ -40,7 +40,7 @@ import coil.request.ImageRequest
 
 @Preview
 @Composable
-private fun SharedAsyncImage() {
+fun SharedAsyncImage() {
     SharedTransitionLayout {
         AnimatedVisibility(visible = true) {
             // [START android_compose_shared_element_async_image_tip]
@@ -77,7 +77,7 @@ fun debugPlaceholder(@DrawableRes debugPreview: Int) =
 
 @Preview
 @Composable
-private fun SharedElementTypicalUseText() {
+fun SharedElementTypicalUseText() {
     SharedTransitionLayout {
         AnimatedVisibility(visible = true) {
             // [START android_compose_shared_element_text_tip]

@@ -63,11 +63,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -109,6 +112,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.compose.AsyncImage
+import com.example.compose.snippets.graphics.BasicShapeCanvas
+import com.example.compose.snippets.graphics.Box400
+import com.example.compose.snippets.graphics.Box500
+import com.example.compose.snippets.graphics.Box600
+import com.example.compose.snippets.layouts.Box300
 import com.zzt.compose.R
 import com.example.compose.snippets.util.randomSampleImageUrl
 import java.net.URLDecoder
@@ -119,8 +127,108 @@ import kotlinx.coroutines.launch
 @Preview
 @Composable
 fun AnimationExamplesScreen() {
-    Column {
-        AnimatedVisibilityCookbook()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 24.dp, end = 24.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        Text("以动画形式出现 / 消失")
+        Box300() {
+            AnimatedVisibilityCookbook()
+        }
+
+        Text("Alpha  动画")
+        Box300() {
+            AnimatedVisibilityCookbook_ModifierAlpha()
+        }
+
+        Text("为背景颜色添加动画效果")
+        Box300() {
+            AnimateBackgroundColor()
+        }
+
+        Text("为背景颜色添加动画效果")
+        Box(modifier = Modifier.height(500.dp)) {
+            AnimateSizeChange()
+        }
+
+        Text("为可组合项的位置添加动画效果")
+        Box300() {
+            AnimateOffset()
+        }
+
+        Text("对位置或大小进行动画")
+        Box400() {
+            AnimationLayout()
+        }
+
+        Text("为可组合项的内边距添加动画")
+        Box300() {
+            AnimatePadding()
+        }
+
+        Text("为可组合项添加高度动画, Z轴阴影动画")
+        Box300() {
+            AnimateElevation()
+        }
+
+        Text("为文本缩放、平移或旋转添加动画效果")
+        Box300() {
+            SmoothAnimateText()
+        }
+
+        Text("为文本添加动画效果")
+        Box300() {
+            AnimateTextColor()
+        }
+
+        Text("在不同类型的内容之间切换")
+        Box300() {
+            AnimatedContentExampleSwitch()
+        }
+
+        Text("重复动画")
+        Box300() {
+            InfinitelyRepeatable()
+        }
+
+        Text("在启动可组合项时启动动画")
+        Box300() {
+            ConcurrentAnimatable()
+        }
+
+        Text("创建顺序动画")
+        Box300() {
+            SequentialAnimations()
+        }
+
+        Text("创建并发动画")
+        Box300() {
+            ConcurrentAnimations()
+        }
+
+        Text("创建并发动画")
+        Box300() {
+            TransitionExampleConcurrent()
+        }
+
+        Text("更改动画时间设置")
+        Box400() {
+            AnimateSizeChange_Specs()
+        }
+
+        Text("----")
+        Box500() {
+            AnimateAlignment()
+        }
+        
+        Text("----")
+        Box500() {
+            AnimationLayoutIndividualItem()
+        }
+
     }
 }
 
@@ -205,9 +313,12 @@ fun AnimateBackgroundColor() {
         label = "color"
     )
     Column(
-        modifier = Modifier.drawBehind {
-            drawRect(animatedColor)
-        }
+        modifier = Modifier
+            .drawBehind { drawRect(animatedColor) }
+            .fillMaxSize()
+            .clickable {
+                animateBackgroundColor = !animateBackgroundColor
+            }
     ) {
         // your composable here
     }
@@ -481,7 +592,9 @@ fun AnimateTextColor() {
             },
             // [START_EXCLUDE]
             style = MaterialTheme.typography.displayLarge,
-            modifier = Modifier.align(Alignment.Center).padding(16.dp)
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(16.dp)
             // [END_EXCLUDE]
         )
         // [END android_compose_animation_cookbook_text_color]
@@ -503,9 +616,9 @@ fun InfinitelyRepeatable() {
         label = "color"
     )
     Column(
-        modifier = Modifier.drawBehind {
-            drawRect(color)
-        }
+        modifier = Modifier
+            .drawBehind { drawRect(color) }
+            .fillMaxSize()
     ) {
         // your composable here
     }
@@ -522,12 +635,24 @@ fun ConcurrentAnimatable() {
     LaunchedEffect(Unit) {
         alphaAnimation.animateTo(1f)
     }
-    Box(
-        modifier = Modifier.graphicsLayer {
-            alpha = alphaAnimation.value
-        }
+
+    val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
+    val animF by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(1000), RepeatMode.Reverse),
+        label = "Float"
     )
-    // [END android_compose_animation_on_launch]
+
+    Box(
+        modifier = Modifier
+            .graphicsLayer {
+                alpha = animF
+            }
+            .background(colorBlue)
+            .width(200.dp)
+            .height(20.dp)
+    )
 }
 
 @Preview
@@ -542,6 +667,17 @@ fun SequentialAnimations() {
         yAnimation.animateTo(100f)
         yAnimation.animateTo(500f, animationSpec = tween(100))
     }
+
+    Box(
+        modifier = Modifier
+            .graphicsLayer {
+                alpha = alphaAnimation.value
+            }
+            .background(colorBlue)
+            .width(yAnimation.value.dp)
+            .height(20.dp)
+    )
+
     // [END android_compose_animation_sequential]
 }
 
@@ -562,10 +698,12 @@ fun ConcurrentAnimations() {
     }
     // [END android_compose_animation_concurrent]
 }
+
 enum class BoxState {
     Collapsed,
     Expanded
 }
+
 @Preview
 @Composable
 fun TransitionExampleConcurrent() {
@@ -654,9 +792,11 @@ fun AnimatedContentExampleSwitch() {
             UiState.Loading -> {
                 LoadingScreen()
             }
+
             UiState.Loaded -> {
                 LoadedScreen()
             }
+
             UiState.Error -> {
                 ErrorScreen()
             }
@@ -765,7 +905,7 @@ fun AnimationLayout() {
         Box(
             modifier = Modifier
                 .size(100.dp)
-                .background(colorBlue)
+                .background(colorYellow)
         )
     }
     // [END android_compose_animation_layout_offset]
@@ -803,7 +943,7 @@ fun AnimateAlignment() {
         Box(
             modifier = Modifier
                 .size(100.dp)
-                .background(colorBlue)
+                .background(colorYellow)
         )
     }
     // [END android_compose_animate_item_placement]
@@ -817,6 +957,7 @@ enum class UiState {
 
 val colorGreen = Color(0xFF53D9A1)
 val colorBlue = Color(0xFF4FC3F7)
+val colorYellow = Color(0xFFFFBF00)
 
 @Preview
 @Composable
@@ -861,7 +1002,7 @@ fun AnimationLayoutIndividualItem() {
         Box(
             modifier = Modifier
                 .size(100.dp)
-                .background(colorBlue)
+                .background(colorYellow)
         )
     }
 }

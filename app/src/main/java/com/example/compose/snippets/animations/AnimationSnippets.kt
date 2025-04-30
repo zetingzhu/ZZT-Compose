@@ -28,6 +28,7 @@ import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.animation.core.AnimationVector2D
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.ExperimentalAnimationSpecApi
@@ -85,6 +86,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Phone
@@ -122,11 +124,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.round
+import com.example.compose.snippets.layouts.Box300
 import com.zzt.compose.R
 import java.text.BreakIterator
 import java.text.StringCharacterIterator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import androidx.compose.foundation.layout.Arrangement
 
 /*
 * Copyright 2023 The Android Open Source Project
@@ -143,6 +147,61 @@ import kotlinx.coroutines.isActive
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+
+@Preview
+@Composable
+fun AnimEnterScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 24.dp, end = 24.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        Text("")
+        Box300() {
+            AnimatedVisibilitySample()
+        }
+
+        Text("")
+        Box300() {
+            AnimatedVisibilityWithEnterAndExit()
+        }
+
+        Text("")
+        Box300() {
+            AnimatedVisibilityMutable()
+        }
+
+        Text("为子项添加进入和退出动画效果")
+        Box300() {
+            AnimatedVisibilityAnimateEnterExitChildren()
+        }
+
+        Text("添加自定义动画")
+        Box300() {
+            AnimatedVisibilityTransition()
+        }
+
+        Text("使用 AnimatedContent 根据目标状态添加动画")
+        Box300() {
+            AnimatedContentSimple()
+        }
+
+        Text("动画过渡")
+        Box300() {
+            AnimatedContentTransitionSpec(10)
+        }
+
+        Text("--")
+        Box300() {
+            AnimatedContentSizeTransform()
+        }
+
+
+    }
+}
+
 @Preview
 @Composable
 private fun AnimatedVisibilitySample() {
@@ -322,12 +381,12 @@ private fun AnimatedContentTransitionSpec(count: Int) {
                 // If the target number is larger, it slides up and fades in
                 // while the initial (smaller) number slides up and fades out.
                 slideInVertically { height -> height } + fadeIn() togetherWith
-                    slideOutVertically { height -> -height } + fadeOut()
+                        slideOutVertically { height -> -height } + fadeOut()
             } else {
                 // If the target number is smaller, it slides down and fades in
                 // while the initial number slides down and fades out.
                 slideInVertically { height -> -height } + fadeIn() togetherWith
-                    slideOutVertically { height -> height } + fadeOut()
+                        slideOutVertically { height -> height } + fadeOut()
             }.using(
                 // Disable clipping since the faded slide-in/out should
                 // be displayed out of bounds.
@@ -352,22 +411,22 @@ private fun AnimatedContentSizeTransform() {
             targetState = expanded,
             transitionSpec = {
                 fadeIn(animationSpec = tween(150, 150)) togetherWith
-                    fadeOut(animationSpec = tween(150)) using
-                    SizeTransform { initialSize, targetSize ->
-                        if (targetState) {
-                            keyframes {
-                                // Expand horizontally first.
-                                IntSize(targetSize.width, initialSize.height) at 150
-                                durationMillis = 300
-                            }
-                        } else {
-                            keyframes {
-                                // Shrink vertically first.
-                                IntSize(initialSize.width, targetSize.height) at 150
-                                durationMillis = 300
+                        fadeOut(animationSpec = tween(150)) using
+                        SizeTransform { initialSize, targetSize ->
+                            if (targetState) {
+                                keyframes {
+                                    // Expand horizontally first.
+                                    IntSize(targetSize.width, initialSize.height) at 150
+                                    durationMillis = 300
+                                }
+                            } else {
+                                keyframes {
+                                    // Shrink vertically first.
+                                    IntSize(initialSize.width, targetSize.height) at 150
+                                    durationMillis = 300
+                                }
                             }
                         }
-                    }
             }, label = "size transform"
         ) { targetExpanded ->
             if (targetExpanded) {
@@ -755,15 +814,17 @@ private fun OffsetKeyframeWithSplineDemo() {
     val density = LocalDensity.current
 
     BoxWithConstraints(
-        Modifier.fillMaxSize().drawBehind {
-            drawPoints(
-                points = points,
-                pointMode = PointMode.Lines,
-                color = Color.LightGray,
-                strokeWidth = 4f,
-                pathEffect = PathEffect.dashPathEffect(floatArrayOf(30f, 20f))
-            )
-        }
+        Modifier
+            .fillMaxSize()
+            .drawBehind {
+                drawPoints(
+                    points = points,
+                    pointMode = PointMode.Lines,
+                    color = Color.LightGray,
+                    strokeWidth = 4f,
+                    pathEffect = PathEffect.dashPathEffect(floatArrayOf(30f, 20f))
+                )
+            }
     ) {
         val minDimension = minOf(maxWidth, maxHeight)
         val size = minDimension / 4
@@ -776,7 +837,8 @@ private fun OffsetKeyframeWithSplineDemo() {
         val maxYOff = heightPx - (sizePx / 2f)
 
         Box(
-            Modifier.align(Alignment.TopCenter)
+            Modifier
+                .align(Alignment.TopCenter)
                 .offset { offsetAnim.value.round() }
                 .size(size)
                 .background(Color.Red, RoundedCornerShape(50))
@@ -789,30 +851,30 @@ private fun OffsetKeyframeWithSplineDemo() {
                 offsetAnim.animateTo(
                     targetValue = Offset.Zero,
                     animationSpec =
-                    keyframesWithSpline {
-                        durationMillis = 4400
+                        keyframesWithSpline {
+                            durationMillis = 4400
 
-                        // Increasingly approach the halfway point moving from side to side
-                        for (i in 0..4) {
-                            val sign = if (i % 2 == 0) 1 else -1
-                            Offset(
-                                x = maxXOff * (i.toFloat() / 5f) * sign,
-                                y = (maxYOff) * (i.toFloat() / 5f)
-                            ) atFraction (0.1f * i)
+                            // Increasingly approach the halfway point moving from side to side
+                            for (i in 0..4) {
+                                val sign = if (i % 2 == 0) 1 else -1
+                                Offset(
+                                    x = maxXOff * (i.toFloat() / 5f) * sign,
+                                    y = (maxYOff) * (i.toFloat() / 5f)
+                                ) atFraction (0.1f * i)
+                            }
+
+                            // Halfway point (at bottom of the screen)
+                            Offset(0f, maxYOff) atFraction 0.5f
+
+                            // Return with mirrored movement
+                            for (i in 0..4) {
+                                val sign = if (i % 2 == 0) 1 else -1
+                                Offset(
+                                    x = maxXOff * (1f - i.toFloat() / 5f) * sign,
+                                    y = (maxYOff) * (1f - i.toFloat() / 5f)
+                                ) atFraction ((0.1f * i) + 0.5f)
+                            }
                         }
-
-                        // Halfway point (at bottom of the screen)
-                        Offset(0f, maxYOff) atFraction 0.5f
-
-                        // Return with mirrored movement
-                        for (i in 0..4) {
-                            val sign = if (i % 2 == 0) 1 else -1
-                            Offset(
-                                x = maxXOff * (1f - i.toFloat() / 5f) * sign,
-                                y = (maxYOff) * (1f - i.toFloat() / 5f)
-                            ) atFraction ((0.1f * i) + 0.5f)
-                        }
-                    }
                 )
                 points.clear()
             }
@@ -938,7 +1000,8 @@ private fun ContentIcon() {
 // [START android_compose_animations_char_by_char]
 @Composable
 private fun AnimatedText() {
-    val text = "This text animates as though it is being typed \uD83E\uDDDE\u200D♀\uFE0F \uD83D\uDD10  \uD83D\uDC69\u200D❤\uFE0F\u200D\uD83D\uDC68 \uD83D\uDC74\uD83C\uDFFD"
+    val text =
+        "This text animates as though it is being typed \uD83E\uDDDE\u200D♀\uFE0F \uD83D\uDD10  \uD83D\uDC69\u200D❤\uFE0F\u200D\uD83D\uDC68 \uD83D\uDC74\uD83C\uDFFD"
 
     // Use BreakIterator as it correctly iterates over characters regardless of how they are
     // stored, for example, some emojis are made up of multiple characters.

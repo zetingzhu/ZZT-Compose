@@ -31,10 +31,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -69,11 +74,77 @@ import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.star
 import androidx.graphics.shapes.toPath
+import com.example.compose.snippets.layouts.Box300
 import com.zzt.compose.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.sin
+
+@Preview
+@Composable
+fun shapeExamples() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 24.dp, end = 24.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        Text("创建多边形")
+        Box300() {
+            BasicShapeCanvas()
+        }
+
+        Text("对多边形的角进行圆化处理")
+        Box300() {
+            RoundedShapeExample()
+        }
+        Box300() {
+            RoundedShapeSmoothnessExample()
+        }
+
+        Text("变形形状")
+        Box300() {
+            MorphExample()
+        }
+
+
+        Text("变形形状,动画变形")
+        Box300() {
+            MorphExampleAnimation()
+        }
+
+        Text("使用多边形作为裁剪")
+        Box300() {
+            ApplyPolygonAsClipBasic()
+        }
+
+        Text("裁剪图片并在裁剪区域周围应用阴影")
+        Box300() {
+            ApplyPolygonAsClipImage()
+        }
+
+        Text("点击时变形按钮")
+        Box300() {
+            MorphOnClick()
+        }
+        Box300() {
+            MorphOnClickV2()
+        }
+
+        Text("无限循环形状变形动画")
+        Box300() {
+            RotatingScallopedProfilePic()
+        }
+
+        Text("自定义多边形")
+        Box600() {
+            CartesianPoints()
+        }
+
+    }
+}
 
 @Preview
 @Composable
@@ -147,7 +218,8 @@ private fun RoundedShapeSmoothnessExample() {
                     drawPath(roundedPolygonPath, color = Color.Black)
                 }
             }
-            .size(100.dp)
+            .fillMaxSize()
+            .offset(x = 100.dp)
     )
 
     // [END android_compose_graphics_polygon_rounding_smooth]
@@ -349,6 +421,53 @@ private fun MorphOnClick() {
     // [END android_compose_graphics_morph_on_click]
 }
 
+
+@Preview
+@Composable
+private fun MorphOnClickV2() {
+    // [START android_compose_graphics_morph_on_click]
+    val shapeC = remember {
+        RoundedPolygon.star(
+            6,
+            rounding = CornerRounding(radius = 0.1f, smoothing = 0f)
+        )
+    }
+    Box(
+        modifier = Modifier
+            .size(200.dp)
+            .padding(8.dp)
+            .clip(ShapeV2(shapeC))
+            .background(Color(0xFF80DEEA))
+            .size(200.dp)
+
+    ) {
+        Text("Hello", modifier = Modifier.align(Alignment.Center))
+    }
+    // [END android_compose_graphics_morph_on_click]
+}
+
+class ShapeV2(
+    private val morph: RoundedPolygon,
+) : Shape {
+
+    private val matrix = Matrix()
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density
+    ): Outline {
+        // Below assumes that you haven't changed the default radius of 1f, nor the centerX and centerY of 0f
+        // By default this stretches the path to the size of the container, if you don't want stretching, use the same size.width for both x and y.
+        matrix.scale(size.width / 2f, size.height / 2f)
+        matrix.translate(1f, 1f)
+
+        val path = morph.toPath().asComposePath()
+        path.transform(matrix)
+        return Outline.Generic(path)
+    }
+}
+
+
 // [START android_compose_shapes_polygon_compose_shape]
 fun RoundedPolygon.getBounds() = calculateBounds().let { Rect(it[0], it[1], it[2], it[3]) }
 class RoundedPolygonShape(
@@ -426,11 +545,11 @@ fun ApplyPolygonAsClipImage() {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .graphicsLayer {
-                    this.shadowElevation = 6.dp.toPx()
+                    this.shadowElevation = 20.dp.toPx()
                     this.shape = clip
                     this.clip = true
-                    this.ambientShadowColor = Color.Black
-                    this.spotShadowColor = Color.Black
+                    this.ambientShadowColor = Color.Red
+                    this.spotShadowColor = Color.Red
                 }
                 .size(200.dp)
 

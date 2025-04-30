@@ -32,6 +32,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.compose.snippets.navigation.AnimComponents
+import com.example.compose.snippets.navigation.ClickComponents
 import com.example.compose.snippets.navigation.ImageShapeComponents
 import com.example.compose.snippets.navigation.PullToRefreshComponents
 import com.example.compose.snippets.navigation.TopComponentsDestination
@@ -119,3 +121,51 @@ fun ImageShapeScreen(navigate: (ImageShapeComponents) -> Unit) {
     }
 }
 
+@Composable
+fun AnimShapeScreen(navigate: (AnimComponents) -> Unit) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        items(AnimComponents.entries) { destination ->
+            ListItem(
+                headlineContent = {
+                    Text(destination.title)
+                },
+                modifier = Modifier.clickable {
+                    navigate(
+                        destination
+                    )
+                }
+            )
+            HorizontalDivider()
+        }
+    }
+}
+
+
+@Composable
+fun ClickScreen(navigate: (ClickComponents) -> Unit) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        items(ClickComponents.entries) { destination ->
+            ListItem(
+                headlineContent = {
+                    Text(destination.title)
+                },
+                modifier = Modifier.clickable {
+                    navigate(
+                        destination
+                    )
+                }
+            )
+            HorizontalDivider()
+        }
+    }
+}

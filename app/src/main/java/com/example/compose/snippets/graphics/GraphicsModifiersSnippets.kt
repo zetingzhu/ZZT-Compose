@@ -21,7 +21,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -36,11 +38,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.RangeSlider
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -69,15 +77,21 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.compose.snippets.layouts.Box300
+import com.example.compose.snippets.layouts.ScaffoldSnackbarDemo
+import com.example.compose.snippets.layouts.ScaffoldSnackbarResultDemo
 import com.zzt.compose.R
 import kotlin.random.Random
 
@@ -95,7 +109,106 @@ import kotlin.random.Random
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/
+**/
+
+@Preview
+@Composable
+fun DrawModifierExamples() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 24.dp, end = 24.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+
+        Text("Modifier.drawWithContent：选择绘制顺序")
+        Box300() {
+            ModifierDrawWithContent()
+        }
+
+        Text("Modifier.drawBehind：在可组合项后面绘制")
+        Box300() {
+            ModifierDrawBehind()
+        }
+
+        Text("Modifier.drawWithCache：绘制和缓存绘制对象")
+        Box300() {
+            ModifierDrawWithCache()
+        }
+
+        Text("Modifier.graphicsLayer：缩放")
+        Box400() {
+            ModifierGraphicsLayerModifierScale()
+        }
+
+        Text("Modifier.graphicsLayer：平移")
+        Box400() {
+            ModifierGraphicsLayerModifierTranslation()
+        }
+
+        Text("Modifier.graphicsLayer：旋转")
+        Box400() {
+            ModifierGraphicsLayerModifierRotation()
+        }
+
+        Text("Modifier.graphicsLayer：指定原点旋转")
+        Box400() {
+            ModifierGraphicsLayerModifierOrigin()
+        }
+
+        Text("Modifier.graphicsLayer：裁剪和形状")
+        ModifierGraphicsLayerModifierClipShape()
+
+        Text("Modifier.graphicsLayer：alpha 值")
+        Box400() {
+            ModifierGraphicsLayerAlpha()
+        }
+
+        Text("Modifier.graphicsLayer：合成策略")
+        Box400() {
+            ModifierGraphicsLayerCompositingStrategy()
+        }
+
+
+        Text("Modifier.graphicsLayer：CompositingStrategy.Offscreen 作用")
+        Box600() {
+            CompositingStrategyExamples()
+        }
+
+        Text("Modifier.graphicsLayer：ModulateAlpha")
+        CompositingStrategy_ModulateAlpha()
+
+
+        Text("Modifier.graphicsLayer：自定义绘制修饰符")
+        Box400() {
+            ModifierGraphicsFlippedUsage()
+        }
+
+    }
+}
+
+@Composable
+fun Box400(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+    Box(modifier = modifier.height(400.dp), content = content)
+}
+
+@Composable
+fun Box500(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+    Box(modifier = modifier.height(500.dp), content = content)
+}
+
+@Composable
+fun Box600(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+    Box(modifier = modifier.height(600.dp), content = content)
+}
+
+@Composable
+fun Box800(modifier: Modifier = Modifier, content: @Composable BoxScope.() -> Unit) {
+    Box(modifier = modifier.height(800.dp), content = content)
+}
+
+
 @Composable
 @Preview
 fun ModifierDrawWithContent() {
@@ -127,6 +240,12 @@ fun ModifierDrawWithContent() {
             }
     ) {
         // Your composables here
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(id = R.drawable.code_bg),
+            contentDescription = stringResource(id = R.string.dog_content_description),
+            contentScale = ContentScale.Crop,
+        )
     }
     // [END android_compose_graphics_modifiers_drawWithContent]
 }
@@ -178,15 +297,32 @@ fun ModifierDrawWithCache() {
 @Preview
 fun ModifierGraphicsLayerModifierScale() {
     // [START android_compose_graphics_modifiers_graphicsLayer_scale]
-    Image(
-        painter = painterResource(id = R.drawable.sunset),
-        contentDescription = "Sunset",
-        modifier = Modifier
-            .graphicsLayer {
-                this.scaleX = 1.2f
-                this.scaleY = 0.8f
-            }
-    )
+    Column {
+        var scaleX by remember { mutableFloatStateOf(1f) }
+        var scaleY by remember { mutableFloatStateOf(1f) }
+
+        Slider(
+            value = scaleX,
+            onValueChange = { scaleX = it },
+            valueRange = 0f..3f
+        )
+
+        Slider(
+            value = scaleY,
+            onValueChange = { scaleY = it },
+            valueRange = 0f..3f
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.sunset),
+            contentDescription = "Sunset",
+            modifier = Modifier
+                .graphicsLayer {
+                    this.scaleX = scaleX
+                    this.scaleY = scaleY
+                }
+        )
+    }
     // [END android_compose_graphics_modifiers_graphicsLayer_scale]
 }
 
@@ -194,15 +330,32 @@ fun ModifierGraphicsLayerModifierScale() {
 @Preview
 fun ModifierGraphicsLayerModifierTranslation() {
     // [START android_compose_graphics_modifiers_graphicsLayer_translation]
-    Image(
-        painter = painterResource(id = R.drawable.sunset),
-        contentDescription = "Sunset",
-        modifier = Modifier
-            .graphicsLayer {
-                this.translationX = 100.dp.toPx()
-                this.translationY = 10.dp.toPx()
-            }
-    )
+    Column {
+        var scaleX by remember { mutableFloatStateOf(1f) }
+        var scaleY by remember { mutableFloatStateOf(1f) }
+
+        Slider(
+            value = scaleX,
+            onValueChange = { scaleX = it },
+            valueRange = 0f..100f
+        )
+
+        Slider(
+            value = scaleY,
+            onValueChange = { scaleY = it },
+            valueRange = 0f..100f
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.sunset),
+            contentDescription = "Sunset",
+            modifier = Modifier
+                .graphicsLayer {
+                    this.translationX = scaleX.dp.toPx()
+                    this.translationY = scaleY.dp.toPx()
+                }
+        )
+    }
     // [END android_compose_graphics_modifiers_graphicsLayer_translation]
 }
 
@@ -210,16 +363,40 @@ fun ModifierGraphicsLayerModifierTranslation() {
 @Preview
 fun ModifierGraphicsLayerModifierRotation() {
     // [START android_compose_graphics_modifiers_graphicsLayer_rotation]
-    Image(
-        painter = painterResource(id = R.drawable.sunset),
-        contentDescription = "Sunset",
-        modifier = Modifier
-            .graphicsLayer {
-                this.rotationX = 90f
-                this.rotationY = 275f
-                this.rotationZ = 180f
-            }
-    )
+    Column {
+        var scaleX by remember { mutableFloatStateOf(1f) }
+        var scaleY by remember { mutableFloatStateOf(1f) }
+        var scaleZ by remember { mutableFloatStateOf(1f) }
+
+        Slider(
+            value = scaleX,
+            onValueChange = { scaleX = it },
+            valueRange = 0f..360f
+        )
+
+        Slider(
+            value = scaleY,
+            onValueChange = { scaleY = it },
+            valueRange = 0f..360f
+        )
+
+        Slider(
+            value = scaleZ,
+            onValueChange = { scaleZ = it },
+            valueRange = 0f..360f
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.sunset),
+            contentDescription = "Sunset",
+            modifier = Modifier
+                .graphicsLayer {
+                    this.rotationX = scaleX
+                    this.rotationY = scaleY
+                    this.rotationZ = scaleZ
+                }
+        )
+    }
     // [END android_compose_graphics_modifiers_graphicsLayer_rotation]
 }
 
@@ -227,17 +404,40 @@ fun ModifierGraphicsLayerModifierRotation() {
 @Composable
 fun ModifierGraphicsLayerModifierOrigin() {
     // [START android_compose_graphics_modifiers_graphicsLayer_origin]
-    Image(
-        painter = painterResource(id = R.drawable.sunset),
-        contentDescription = "Sunset",
-        modifier = Modifier
-            .graphicsLayer {
-                this.transformOrigin = TransformOrigin(0f, 0f)
-                this.rotationX = 90f
-                this.rotationY = 275f
-                this.rotationZ = 180f
-            }
-    )
+    Column {
+        var scaleX by remember { mutableFloatStateOf(1f) }
+        var scaleY by remember { mutableFloatStateOf(1f) }
+        var scaleZ by remember { mutableFloatStateOf(1f) }
+
+        Slider(
+            value = scaleX,
+            onValueChange = { scaleX = it },
+            valueRange = 0f..360f
+        )
+
+        Slider(
+            value = scaleY,
+            onValueChange = { scaleY = it },
+            valueRange = 0f..360f
+        )
+
+        Slider(
+            value = scaleZ,
+            onValueChange = { scaleZ = it },
+            valueRange = 0f..360f
+        )
+        Image(
+            painter = painterResource(id = R.drawable.sunset),
+            contentDescription = "Sunset",
+            modifier = Modifier
+                .graphicsLayer {
+                    this.transformOrigin = TransformOrigin(0f, 0f)
+                    this.rotationX = scaleX
+                    this.rotationY = scaleY
+                    this.rotationZ = scaleZ
+                }
+        )
+    }
     // [END android_compose_graphics_modifiers_graphicsLayer_origin]
 }
 
@@ -245,7 +445,11 @@ fun ModifierGraphicsLayerModifierOrigin() {
 @Composable
 fun ModifierGraphicsLayerModifierClipShape() {
     // [START android_compose_graphics_modifiers_graphicsLayer_clip_shape]
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .height(500.dp)
+    ) {
         Box(
             modifier = Modifier
                 .size(200.dp)
@@ -270,8 +474,46 @@ fun ModifierGraphicsLayerModifierClipShape() {
     }
     // [END android_compose_graphics_modifiers_graphicsLayer_clip_shape]
 
+    Text("translationY 内容被移除原始区域")
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .height(500.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(200.dp)
+                .border(2.dp, Color.Black)
+                .graphicsLayer {
+                    clip = true
+                    shape = CircleShape
+                    translationY = 50.dp.toPx()
+                }
+                .background(Color(0xFFF06292))
+        ) {
+            Text(
+                "Hello Compose",
+                style = TextStyle(color = Color.Black, fontSize = 46.sp),
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .size(200.dp)
+                .clip(RoundedCornerShape(500.dp))
+                .background(Color(0xFF4DB6AC))
+        )
+    }
+
+
+    Text("clip(RectangleShape) 内容保留在原始区域")
     // [START android_compose_graphics_modifiers_graphicsLayer_clip_shape_2]
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .height(500.dp)
+    ) {
         Box(
             modifier = Modifier
                 .clip(RectangleShape)
@@ -305,14 +547,25 @@ fun ModifierGraphicsLayerModifierClipShape() {
 @Composable
 fun ModifierGraphicsLayerAlpha() {
     // [START android_compose_graphics_modifiers_graphicsLayer_alpha]
-    Image(
-        painter = painterResource(id = R.drawable.sunset),
-        contentDescription = "clock",
-        modifier = Modifier
-            .graphicsLayer {
-                this.alpha = 0.5f
-            }
-    )
+    Column {
+        var alpha by remember { mutableFloatStateOf(1f) }
+
+        Slider(
+            value = alpha,
+            onValueChange = { alpha = it },
+            valueRange = 0f..1f
+        )
+
+
+        Image(
+            painter = painterResource(id = R.drawable.sunset),
+            contentDescription = "clock",
+            modifier = Modifier
+                .graphicsLayer {
+                    this.alpha = alpha
+                }
+        )
+    }
     // [END android_compose_graphics_modifiers_graphicsLayer_alpha]
 }
 
@@ -402,7 +655,7 @@ fun CompositingStrategyExamples() {
             drawRect(color = Color.Magenta, size = Size(200.dp.toPx(), 200.dp.toPx()))
         }
 
-        Spacer(modifier = Modifier.size(300.dp))
+        Spacer(modifier = Modifier.size(150.dp))
 
         /* Clips content as alpha usage here creates an offscreen buffer to rasterize content
         into first then draws to the original destination */
@@ -444,6 +697,7 @@ fun CompositingStrategy_ModulateAlpha() {
             modifier = Modifier
                 .size(200.dp)
                 .graphicsLayer {
+                    compositingStrategy = CompositingStrategy.Auto
                     alpha = 0.5f
                 }
         ) {
@@ -457,7 +711,18 @@ fun CompositingStrategy_ModulateAlpha() {
                 .size(200.dp)
                 .graphicsLayer {
                     compositingStrategy = CompositingStrategy.ModulateAlpha
-                    alpha = 0.75f
+                    alpha = 0.5f
+                }
+        ) {
+            drawSquares()
+        }
+
+        Canvas(
+            modifier = Modifier
+                .size(200.dp)
+                .graphicsLayer {
+                    compositingStrategy = CompositingStrategy.Offscreen
+                    alpha = 0.5f
                 }
         ) {
             drawSquares()
@@ -527,10 +792,11 @@ fun FadedEdgeBox(modifier: Modifier = Modifier, content: @Composable () -> Unit)
         content()
     }
 }
+
 // [END android_compose_graphics_faded_edge_example]
 @Preview
 @Composable
-private fun FadingLazyComments() {
+fun FadingLazyComments() {
     FadedEdgeBox(
         modifier = Modifier
             .padding(32.dp)
@@ -616,7 +882,7 @@ fun Avatar(
 
 @Preview
 @Composable
-private fun StackedAvatars() {
+fun StackedAvatars() {
     Box(
         modifier = Modifier
             .fillMaxSize()

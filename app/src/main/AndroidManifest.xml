@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,11 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ZZTCompose"
         tools:targetApi="31">
-        <activity
-            android:name=".act.ActHorizontalPager"
-            android:exported="false"
-            android:label="@string/title_activity_act_horizontal_pager"
-            android:theme="@style/Theme.ZZTCompose" />
+
         <activity
             android:name=".act.ComposeLayoutAct"
             android:exported="true" />

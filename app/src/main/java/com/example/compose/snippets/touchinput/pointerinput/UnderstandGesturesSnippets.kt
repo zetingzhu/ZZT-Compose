@@ -18,6 +18,8 @@
 
 package com.example.compose.snippets.touchinput.pointerinput
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
@@ -28,8 +30,12 @@ import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,6 +50,61 @@ import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.snippets.layouts.Box300
+import com.example.compose.snippets.touchinput.keyboardinput.showToast
+import com.zzt.compose.MyApplication
+
+
+@Preview
+@Composable
+fun ClickExamplesScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 24.dp, end = 24.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+
+        Box300 {
+            Layering()
+        }
+
+        Text("使用 pointerInput 修饰符向任意可组合项添加自定义手势")
+        Box300 {
+            LogPointerEvents()
+        }
+
+
+        Text("检测完整手势-单个检测")
+        Box300 {
+            IncorrectDoubleGestureDetector()
+        }
+
+        Text("检测完整手势-组合检测")
+        Box300 {
+            CorrectDoubleGestureDetector()
+        }
+
+        Text("每个手势处理事件")
+        Box300 {
+            SimpleClickable() {
+                showToast("点击了")
+            }
+        }
+
+        Text("事件消耗")
+        Box300 {
+            Consuming()
+        }
+
+    }
+}
+
+fun showToast(message: String) {
+    val toast = Toast.makeText(MyApplication.context, message, Toast.LENGTH_SHORT)
+    toast.show()
+}
 
 @Preview
 @Composable

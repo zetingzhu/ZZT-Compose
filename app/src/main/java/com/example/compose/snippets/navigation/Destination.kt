@@ -19,17 +19,16 @@ package com.example.compose.snippets.navigation
 enum class Destination(val route: String, val title: String) {
     ArchitectingExamples("ArchitectingExamples", "架构相关"),
     PaddingExamples("paddingExamples", "边距修饰符"),
-    BrushExamples("brushExamples", "Brush Examples"),
     ImageShapeExamples("ImageShapeExamples", "Image Shape Examples 图片形状"),
-    AnimationQuickGuideExamples("animationExamples", "Animation Examples"),
+    AnimationQuickGuideExamples("animationExamples", "Animation Examples 动画"),
     ComponentsExamples("topComponents", "Top Compose Components"),
     ScreenshotExample("screenshotExample", "Screenshot Examples"),
-    ShapesExamples("shapesExamples", "Shapes Examples"),
     SharedElementExamples("sharedElement", "Shared elements"),
     PagerExamples("pagerExamples", "Pager examples"),
     PagerExamplesV2("pagerExamplesV2", "Pager 分页显示"),
     PullToRefreshExamples("pullComponents", "下拉刷新"),
     ResourceExamples("resourceExamples", "资源 Resource 使用"),
+    ClickExamples("ClickExamples", "手势，输入，轻触，点击"),
 }
 
 // Enum class for compose components navigation screen.
@@ -66,7 +65,7 @@ enum class TopComponentsDestination(val route: String, val title: String) {
     SwipeToDismissBoxExamples("swipeToDismissBoxExamples", "Swipe to dismiss box examples"),
 
 
-    SearchBarExamples("searchBarExamples", "Search bar, 不好用，看起来好多东西"),
+    SearchBarExamples("searchBarExamples", "Search bar, 不好用"),
 }
 
 enum class PullToRefreshComponents(val route: String, val title: String) {
@@ -79,5 +78,37 @@ enum class ImageShapeComponents(val route: String, val title: String) {
     ImageExamples("imageExamples", "Image Examples"),
     ImageBitmapVectorExamples("ImageBitmapVectorExamples", "ImageBitmap 与 ImageVector"),
     CanvasExamples("canvasExamples", "Canvas 简单使用 "),
-    CanvasDrawExamples("CanvasDrawExamples", "Canvas 绘制修饰符，手电筒效果"),
+    CanvasDrawExamples(
+        "CanvasDrawExamples",
+        "Canvas Modifier.drawWithContent：选择绘制顺序，手电筒效果 "
+    ),
+    ModifierDrawBehind("ModifierDrawBehind", "Canvas Modifier.drawBehind：在可组合项后面绘制"),
+    CreateBitmapFromGraphicsLayer("CreateBitmapFromGraphicsLayer", "将可组合项的内容写入位图"),
+    BrushExamples("brushExamples", "Brush Examples Brush：渐变和着色器 "),
+    FadingLazyComments("FadingLazyComments", "淡化"),
+    StackedAvatars("StackedAvatars", "堆叠头像"),
+    ShapeExamples("shapeExamples", "画图形状，裁剪，动画"),
+    ShapesExamples("shapesExamples", "Shapes Examples 裁剪图片并在裁剪区域周围应用阴影"),
+}
+
+enum class AnimComponents(val route: String, val title: String) {
+    AnimNormal("AnimNormal", "普通动画，平移，颜色，位置"),
+    AnimNav("AnimNav", "在导航到不同目的地时添加动画"),
+    AnimEnterTransition("AnimEnterTransition", "自定义过渡效果"),
+    AnimGesture("AnimGestureV1", "手势动画 V1"),
+    AnimGestureV2("AnimGestureV2", "手势动画 V2"),
+    AnimSharV1("AnimSharV1", "共享元素"),
+    AnimSharV2("AnimSharV2", "共享元素"),
+    AnimSharV3("AnimSharV3", "常见共享元素用例-异步图片"),
+    AnimSharV4("AnimSharV4", "常见共享元素用例-文本"),
+    AnimSharNav("AnimSharNav", "使用 Navigation Compose 构建共享元素"),
+}
+
+enum class ClickComponents(val route: String, val title: String) {
+    ClickExample("ClickExample", "各种点击事件"),
+    ClickExampleV2("ClickExampleV2", "点按并按下"),
+    ClickExampleV3("ClickExampleV3", "点击 放大图片，双击缩放图片，背景关闭图片"),
+    ClickExampleV4("ClickExampleV4", "长按弹出底部弹框"),
+    ClickExampleV5("ClickExampleV5", "长按选中数据个数"),
+    ScrollExampleV1("ScrollExampleV1", "普通滚动"),
 }

@@ -41,7 +41,7 @@ fun ZtNavDrawView(scope: CoroutineScope? = null, drawerState: DrawerState? = nul
     ) {
         Spacer(Modifier.height(12.dp))
         Text(
-            "侧边栏标题",
+            "侧边栏标题,点击关闭侧边栏",
             modifier = Modifier
                 .padding(16.dp)
                 .clickable {

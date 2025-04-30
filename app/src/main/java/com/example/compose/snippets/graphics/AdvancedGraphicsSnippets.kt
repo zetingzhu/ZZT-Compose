@@ -89,7 +89,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 
 @Preview
 @Composable
-private fun CreateBitmapFromGraphicsLayer() {
+fun CreateBitmapFromGraphicsLayer() {
     // [START android_compose_graphics_layer_bitmap_basics]
     val coroutineScope = rememberCoroutineScope()
     val graphicsLayer = rememberGraphicsLayer()

@@ -25,17 +25,23 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
@@ -79,30 +85,72 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.example.compose.snippets.layouts.Box300
 import com.zzt.compose.R
 import com.example.compose.snippets.ui.theme.SnippetsTheme
 import com.example.compose.snippets.util.rememberRandomSampleImageUrl
 
-private class Photo(
+
+class Photo(
     val id: Int,
     val url: String,
     val highResUrl: String
 )
 
+
 @Preview
 @Composable
-private fun MyApp() {
+fun ClickScreenV2() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 24.dp, end = 24.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+
+        Box300 {
+            ClickableSurfaceSample()
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ClickScreenV3() {
     val photos = List(100) {
         val url = rememberRandomSampleImageUrl(width = 256)
         Photo(it, url, url.replace("256", "1024"))
     }
     SnippetsTheme {
-        // Uncomment the sample you want to run
         ImageGrid(photos)
-//        ImageGridContextMenu(photos)
-//        MultiselectMode(photos)
     }
 }
+
+@Preview
+@Composable
+fun ClickScreenV4() {
+    val photos = List(100) {
+        val url = rememberRandomSampleImageUrl(width = 256)
+        Photo(it, url, url.replace("256", "1024"))
+    }
+    SnippetsTheme {
+        ImageGridContextMenu(photos)
+    }
+}
+
+@Preview
+@Composable
+fun ClickScreenV5() {
+    val photos = List(100) {
+        val url = rememberRandomSampleImageUrl(width = 256)
+        Photo(it, url, url.replace("256", "1024"))
+    }
+    SnippetsTheme {
+        MultiselectMode(photos)
+    }
+}
+
 
 @Composable
 private fun ClickableSurfaceSample() {
@@ -210,16 +258,20 @@ private fun MultiselectMode(photos: List<Photo>) {
         }
     }
     if (inSelectionMode) {
-        ElevatedButton(
-            onClick = { selectedIds = emptySet() },
-            contentPadding = PaddingValues(8.dp),
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Icon(
-                Icons.Default.Close, null
-            )
-            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-            Text(selectedIds.count().toString())
+        Box(modifier = Modifier.fillMaxWidth()) {
+            ElevatedButton(
+                onClick = { selectedIds = emptySet() },
+                contentPadding = PaddingValues(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Icon(
+                    Icons.Default.Close, null
+                )
+                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                Text(selectedIds.count().toString())
+            }
         }
     }
     // [END android_compose_touchinput_pointerinput_multiselect]

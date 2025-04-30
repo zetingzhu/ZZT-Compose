@@ -27,6 +27,7 @@ import androidx.compose.foundation.gestures.horizontalDrag
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -57,7 +58,7 @@ import kotlinx.coroutines.launch
 * limitations under the License.
 */
 
-private object GestureAndAnimationSimple {
+object GestureAndAnimationSimple {
     // [START android_compose_animations_gesture_example]
     @Composable
     fun Gesture() {
@@ -89,7 +90,7 @@ private object GestureAndAnimationSimple {
     // [END android_compose_animations_gesture_example]
 }
 
-private object GestureAndAnimationSwipeToDismiss {
+object GestureAndAnimationSwipeToDismiss {
     // [START android_compose_animations_gesture_swipe_dismiss]
     fun Modifier.swipeToDismiss(
         onDismissed: () -> Unit
@@ -147,11 +148,27 @@ private object GestureAndAnimationSwipeToDismiss {
                     }
                 }
             }
-        }
-            .offset { IntOffset(offsetX.value.roundToInt(), 0) }
+        }.offset { IntOffset(offsetX.value.roundToInt(), 0) }
     }
     // [END android_compose_animations_gesture_swipe_dismiss]
+
+
+    @Composable
+    fun GestureV2() {
+        Box(Modifier.swipeToDismiss {
+
+        }) {
+            Text(
+                text = "AAAAAAAAAAa"
+            )
+        }
+    }
 }
+
 @Composable
-private fun Circle(modifier: Modifier = Modifier) {
+fun Circle(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier,
+        text = "AAAAAAAAAAa"
+    )
 }

@@ -18,6 +18,7 @@
 
 package com.example.compose.snippets.touchinput.gestures
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
@@ -32,6 +33,7 @@ import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.gestures.transformable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -71,7 +73,38 @@ import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.example.compose.snippets.graphics.Box400
+import com.example.compose.snippets.graphics.Box500
+import com.example.compose.snippets.graphics.Box600
+import com.example.compose.snippets.layouts.Box300
 import kotlin.math.roundToInt
+
+
+@Preview
+@Composable
+fun ScrollExampleV1() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 24.dp, end = 24.dp)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+
+        Text("普通滚动")
+        ScrollBoxes()
+
+        Text("普通滚动，默认值")
+        ScrollBoxesSmooth()
+
+        Text("可滚动的修饰符, 得到滚动偏移量")
+        ScrollableSample()
+
+        Text("自动嵌套滚动")
+        AutomaticNestedScroll()
+
+    }
+}
 
 @Preview
 // [START android_compose_touchinput_gestures_clickable]
@@ -94,15 +127,15 @@ private fun WithPointerInput() {
     Text(
         text = count.value.toString(),
         modifier =
-        // [START android_compose_touchinput_gestures_pointerinput]
-        Modifier.pointerInput(Unit) {
-            detectTapGestures(
-                onPress = { /* Called when the gesture starts */ },
-                onDoubleTap = { /* Called on Double Tap */ },
-                onLongPress = { /* Called on Long Press */ },
-                onTap = { /* Called on Tap */ }
-            )
-        }
+            // [START android_compose_touchinput_gestures_pointerinput]
+            Modifier.pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = { /* Called when the gesture starts */ },
+                    onDoubleTap = { /* Called on Double Tap */ },
+                    onLongPress = { /* Called on Long Press */ },
+                    onTap = { /* Called on Tap */ }
+                )
+            }
         // [END android_compose_touchinput_gestures_pointerinput]
     )
 }
@@ -117,7 +150,7 @@ private fun ScrollBoxes() {
             .size(100.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        repeat(10) {
+        repeat(20) {
             Text("Item $it", modifier = Modifier.padding(2.dp))
         }
     }
@@ -139,7 +172,7 @@ private fun ScrollBoxesSmooth() {
             .padding(horizontal = 8.dp)
             .verticalScroll(state)
     ) {
-        repeat(10) {
+        repeat(20) {
             Text("Item $it", modifier = Modifier.padding(2.dp))
         }
     }
@@ -179,6 +212,8 @@ private fun AutomaticNestedScroll() {
     Box(
         modifier = Modifier
             .background(Color.LightGray)
+            .height(300.dp)
+            .fillMaxWidth()
             .verticalScroll(rememberScrollState())
             .padding(32.dp)
     ) {
@@ -207,6 +242,7 @@ private fun AutomaticNestedScroll() {
 private object NestedScrollInterop {
     // [START android_compose_touchinput_gestures_nested_scroll_interop_activity]
     open class MainActivity : ComponentActivity() {
+        @SuppressLint("MissingInflatedId")
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)

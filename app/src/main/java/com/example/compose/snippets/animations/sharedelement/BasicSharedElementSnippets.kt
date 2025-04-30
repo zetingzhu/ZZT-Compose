@@ -58,10 +58,11 @@ import com.zzt.compose.R
 import com.example.compose.snippets.ui.theme.LavenderLight
 import com.example.compose.snippets.ui.theme.RoseLight
 
-private class SharedElementBasicUsage2 {
-    @Preview
+object SharedElementBasicUsage2 {
+
+    @OptIn(ExperimentalSharedTransitionApi::class)
     @Composable
-    private fun SharedElementApp() {
+    fun SharedElementApp() {
         // [START android_compose_animations_shared_element_step1]
         var showDetails by remember {
             mutableStateOf(false)
@@ -94,7 +95,7 @@ private class SharedElementBasicUsage2 {
     }
 
     @Composable
-    private fun MainContent(
+    fun MainContent(
         onShowDetails: () -> Unit,
         sharedTransitionScope: SharedTransitionScope,
         animatedVisibilityScope: AnimatedVisibilityScope
@@ -126,7 +127,7 @@ private class SharedElementBasicUsage2 {
     }
 
     @Composable
-    private fun DetailsContent(
+    fun DetailsContent(
         modifier: Modifier = Modifier,
         onBack: () -> Unit,
         sharedTransitionScope: SharedTransitionScope,
@@ -156,21 +157,20 @@ private class SharedElementBasicUsage2 {
             Text("Cupcake", fontSize = 28.sp)
             Text(
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet lobortis velit. " +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-                    " Curabitur sagittis, lectus posuere imperdiet facilisis, nibh massa " +
-                    "molestie est, quis dapibus orci ligula non magna. Pellentesque rhoncus " +
-                    "hendrerit massa quis ultricies. Curabitur congue ullamcorper leo, at maximus"
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
+                        " Curabitur sagittis, lectus posuere imperdiet facilisis, nibh massa " +
+                        "molestie est, quis dapibus orci ligula non magna. Pellentesque rhoncus " +
+                        "hendrerit massa quis ultricies. Curabitur congue ullamcorper leo, at maximus"
             )
             // [END_EXCLUDE]
         }
     }
 }
 
-private class SharedElementBasicUsage3 {
+object SharedElementBasicUsage3 {
 
-    @Preview
     @Composable
-    private fun SharedElementApp() {
+    fun SharedElementApp() {
         var showDetails by remember {
             mutableStateOf(false)
         }
@@ -288,10 +288,10 @@ private class SharedElementBasicUsage3 {
                 )
                 Text(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet lobortis velit. " +
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-                        " Curabitur sagittis, lectus posuere imperdiet facilisis, nibh massa " +
-                        "molestie est, quis dapibus orci ligula non magna. Pellentesque rhoncus " +
-                        "hendrerit massa quis ultricies. Curabitur congue ullamcorper leo, at maximus"
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
+                            " Curabitur sagittis, lectus posuere imperdiet facilisis, nibh massa " +
+                            "molestie est, quis dapibus orci ligula non magna. Pellentesque rhoncus " +
+                            "hendrerit massa quis ultricies. Curabitur congue ullamcorper leo, at maximus"
                 )
                 // [END_EXCLUDE]
             }
