@@ -21,6 +21,9 @@ enum class Destination(val route: String, val title: String) {
     PaddingExamples("paddingExamples", "边距修饰符"),
     ImageShapeExamples("ImageShapeExamples", "Image Shape Examples 图片形状"),
     AnimationQuickGuideExamples("animationExamples", "Animation Examples 动画"),
+    ClickExamples("ClickExamples", "手势，输入，轻触，点击"),
+    KeyboardInput("KeyboardInput", "键盘输入,这玩意有啥用，完全测试不出来"),
+    FocusSample("FocusSample", "焦点相关"),
     ComponentsExamples("topComponents", "Top Compose Components"),
     ScreenshotExample("screenshotExample", "Screenshot Examples"),
     SharedElementExamples("sharedElement", "Shared elements"),
@@ -28,7 +31,6 @@ enum class Destination(val route: String, val title: String) {
     PagerExamplesV2("pagerExamplesV2", "Pager 分页显示"),
     PullToRefreshExamples("pullComponents", "下拉刷新"),
     ResourceExamples("resourceExamples", "资源 Resource 使用"),
-    ClickExamples("ClickExamples", "手势，输入，轻触，点击"),
 }
 
 // Enum class for compose components navigation screen.
@@ -111,4 +113,6 @@ enum class ClickComponents(val route: String, val title: String) {
     ClickExampleV4("ClickExampleV4", "长按弹出底部弹框"),
     ClickExampleV5("ClickExampleV5", "长按选中数据个数"),
     ScrollExampleV1("ScrollExampleV1", "普通滚动"),
+    ScrollExampleV3("ScrollExampleV3", "滚动调整图片大小"),
+    ScrollExampleV2("ScrollExampleV2", "嵌套滚动，Act 页面嵌套"),
 }

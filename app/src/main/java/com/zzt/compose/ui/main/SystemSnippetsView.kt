@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -85,7 +86,11 @@ import com.example.compose.snippets.navigation.ImageShapeComponents
 import com.example.compose.snippets.navigation.PullToRefreshComponents
 import com.example.compose.snippets.navigation.TopComponentsDestination
 import com.example.compose.snippets.resources.ResourceExample
+import com.example.compose.snippets.touchinput.focus.FocusExample
+import com.example.compose.snippets.touchinput.gestures.NestedScrollInterop
 import com.example.compose.snippets.touchinput.gestures.ScrollExampleV1
+import com.example.compose.snippets.touchinput.gestures.ScrollExampleV3
+import com.example.compose.snippets.touchinput.keyboardinput.CommandsScreen
 import com.example.compose.snippets.touchinput.pointerinput.ClickExamplesScreen
 import com.example.compose.snippets.touchinput.pointerinput.ClickScreenV2
 import com.example.compose.snippets.touchinput.pointerinput.ClickScreenV3
@@ -147,6 +152,9 @@ fun SystemPage() {
                                 it.route
                             )
                         }
+
+                        Destination.KeyboardInput -> CommandsScreen()
+                        Destination.FocusSample -> FocusExample()
                     }
                 }
             }
@@ -245,10 +253,15 @@ fun SystemPage() {
                         ClickComponents.ClickExampleV4 -> ClickScreenV4()
                         ClickComponents.ClickExampleV5 -> ClickScreenV5()
                         ClickComponents.ScrollExampleV1 -> ScrollExampleV1()
+                        ClickComponents.ScrollExampleV2 -> {
+                            val context = LocalContext.current
+                            NestedScrollInterop.MainActivity.start(context)
+                        }
+
+                        ClickComponents.ScrollExampleV3 -> ScrollExampleV3()
                     }
                 }
             }
-
         }
     }
 }

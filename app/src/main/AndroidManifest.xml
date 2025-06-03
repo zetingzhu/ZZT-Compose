@@ -79,6 +79,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.example.compose.snippets.touchinput.gestures.NestedScrollInterop$MainActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

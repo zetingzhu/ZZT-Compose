@@ -16,6 +16,7 @@
 
 package com.example.compose.snippets.images
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -63,9 +64,19 @@ fun ImageResizeOnScrollExample(
                 val newImageSize = currentImageSize + delta.dp
                 val previousImageSize = currentImageSize
 
+                Log.d(
+                    "ZZT",
+                    ">1  nis:" + newImageSize + " cis:" + currentImageSize + " delta:" + delta + " pis:" + previousImageSize
+                )
+
                 // Constrain the image size within the allowed bounds
                 currentImageSize = newImageSize.coerceIn(minImageSize, maxImageSize)
                 val consumed = currentImageSize - previousImageSize
+
+                Log.w(
+                    "ZZT",
+                    ">2  nis:" + newImageSize + " cis:" + currentImageSize + " consumed:" + consumed
+                )
 
                 // Calculate the scale for the image
                 imageScale = currentImageSize / maxImageSize

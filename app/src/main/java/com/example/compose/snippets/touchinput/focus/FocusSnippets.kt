@@ -32,6 +32,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Switch
@@ -72,11 +74,30 @@ import androidx.compose.ui.node.invalidateDraw
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.snippets.layouts.Box300
 import kotlinx.coroutines.launch
 
 @Preview
 @Composable
-private fun BasicSample() {
+fun FocusExample() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+
+        Box300 {
+            BasicSample()
+        }
+        Box300 {
+            BasicSample2()
+        }
+    }
+}
+
+@Preview
+@Composable
+fun BasicSample() {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         // [START android_compose_touchinput_focus_horizontal]
         Column {
@@ -95,7 +116,7 @@ private fun BasicSample() {
 
 @Preview
 @Composable
-private fun BasicSample2() {
+fun BasicSample2() {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         // [START android_compose_touchinput_focus_vertical]
         Row {

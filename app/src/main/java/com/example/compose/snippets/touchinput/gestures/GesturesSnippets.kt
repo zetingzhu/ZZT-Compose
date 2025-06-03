@@ -19,6 +19,8 @@
 package com.example.compose.snippets.touchinput.gestures
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
@@ -76,7 +78,9 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.snippets.graphics.Box400
 import com.example.compose.snippets.graphics.Box500
 import com.example.compose.snippets.graphics.Box600
+import com.example.compose.snippets.images.ImageResizeOnScrollExample
 import com.example.compose.snippets.layouts.Box300
+import com.zzt.compose.R
 import kotlin.math.roundToInt
 
 
@@ -102,6 +106,41 @@ fun ScrollExampleV1() {
 
         Text("自动嵌套滚动")
         AutomaticNestedScroll()
+
+        Text("参与嵌套滚动周期")
+        NestedScrollSample()
+
+        Text("拖动、滑动和快速滑动")
+        Box300 {
+            DraggableText()
+        }
+
+        Text("拖动、滑动和快速滑动")
+        Box300 {
+            DraggableTextLowLevel()
+        }
+
+        Text("使用 swipeable 滑动")
+        Box300 {
+            SwipeableSample()
+        }
+
+        Text("多点触控：平移、缩放、旋转")
+        Box500 {
+            TransformableSample()
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ScrollExampleV3() {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+
+        Text("滚动调整图片大小")
+        ImageResizeOnScrollExample()
 
     }
 }
@@ -239,13 +278,21 @@ private fun AutomaticNestedScroll() {
 }
 // [END android_compose_touchinput_gestures_nested_scroll]
 
-private object NestedScrollInterop {
+object NestedScrollInterop {
     // [START android_compose_touchinput_gestures_nested_scroll_interop_activity]
     open class MainActivity : ComponentActivity() {
+        companion object {
+            @JvmStatic
+            fun start(context: Context) {
+                val starter = Intent(context, MainActivity::class.java)
+                context.startActivity(starter)
+            }
+        }
+
         @SuppressLint("MissingInflatedId")
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_main)
+            setContentView(R.layout.touchinput_gestures_nested_scroll_interop)
             findViewById<ComposeView>(R.id.compose_view).apply {
                 setContent {
                     val nestedScrollInterop = rememberNestedScrollInteropConnection()
@@ -271,15 +318,15 @@ private object NestedScrollInterop {
     }
     // [END android_compose_touchinput_gestures_nested_scroll_interop_activity]
 
-    object R {
-        object id {
-            val compose_view = 1
-        }
-
-        object layout {
-            val activity_main = 0
-        }
-    }
+//    object R {
+//        object id {
+//            val compose_view = 1
+//        }
+//
+//        object layout {
+//            val activity_main = 0
+//        }
+//    }
 }
 
 // [START android_compose_touchinput_gestures_draggable]
