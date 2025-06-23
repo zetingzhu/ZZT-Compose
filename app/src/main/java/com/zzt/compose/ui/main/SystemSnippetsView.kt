@@ -47,6 +47,8 @@ import com.example.compose.snippets.components.DividerExamples
 import com.example.compose.snippets.components.FloatingActionButtonExamples
 import com.example.compose.snippets.components.ImageShapeScreen
 import com.example.compose.snippets.components.MenusExamples
+import com.example.compose.snippets.components.NavTabExamples
+import com.example.compose.snippets.components.NavigationBarExamples
 import com.example.compose.snippets.components.PartialBottomSheet
 import com.example.compose.snippets.components.ProgressIndicatorExamples
 import com.example.compose.snippets.components.PullScreen
@@ -192,6 +194,10 @@ fun SystemPage() {
                         TopComponentsDestination.SegmentedButtonExamples -> SegmentedButtonExamples()
                         TopComponentsDestination.BadgeExamples -> BadgeExamples()
                         TopComponentsDestination.PartialBottomSheet -> PartialBottomSheet()
+                        TopComponentsDestination.NavTab -> NavTabExamples()
+                        TopComponentsDestination.NavigationBar -> NavigationBarExamples()
+
+
                         TopComponentsDestination.CarouselExamples -> CarouselExamples()
                         TopComponentsDestination.TooltipExamples -> TooltipExamples()
                         TopComponentsDestination.SwipeToDismissBoxExamples -> SwipeToDismissBoxExamples()

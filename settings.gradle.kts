@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ZZT-Compose"
 include(":app")
+include(":zt_composttest")

@@ -81,6 +81,10 @@ dependencies {
     // coil
     implementation("io.coil-kt:coil-compose:2.0.0")
 
+    // 网络请求
+    implementation("com.squareup.retrofit2:retrofit:2.4.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.1.0")
+
     implementation(libs.androidx.work.runtime.ktx)
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)

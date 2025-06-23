@@ -1,7 +1,6 @@
 package com.zzt.compose.ui.main
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,27 +21,60 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.compose.snippets.landing.LandingScreen
 import com.zzt.compose.R
+import com.zzt.compose.act.ComposeRequestNetwork
 import com.zzt.compose.theme.ZZTComposeTheme
+import com.zzt.compose.ui.entiy.SettingMenu
+import com.zzt.compose.ui.entiy.SettingScreen
 
 /**
  * @author: zeting
  * @date: 2025/4/14
  *
  */
+
 @Composable
 fun SettingPage() {
-//    SettingPageV1()
-
-    SettingPageV2()
+    val context = LocalContext.current
+    val navController = rememberNavController()
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        NavHost(navController, startDestination = "SettingScreen.kt") {
+            composable("SettingScreen.kt") {
+                SettingScreen(
+                    navigate = { navController.navigate(it.route) },
+                    onClick = {
+                        // 接口请求
+                        ComposeRequestNetwork.start(context)
+                    })
+            }
+            SettingMenu.entries.forEach { menu ->
+                composable(menu.route) {
+                    when (menu) {
+                        SettingMenu.ThemeSettings -> SettingPageV1()
+                        SettingMenu.ThemeSettings2 -> SettingPageV2()
+                        SettingMenu.RequestsNetwork -> {}
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -70,6 +102,7 @@ fun SettingPageV1() {
     }
 }
 
+@Preview
 @Composable
 fun SettingPageV2() {
     Column(

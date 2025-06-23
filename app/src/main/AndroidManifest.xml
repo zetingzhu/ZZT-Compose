@@ -84,6 +84,10 @@
             android:name="com.example.compose.snippets.touchinput.gestures.NestedScrollInterop$MainActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".act.ComposeRequestNetwork"
+            android:exported="false" />
+
     </application>
 
 </manifest>
