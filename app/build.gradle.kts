@@ -84,6 +84,11 @@ dependencies {
     // 网络请求
     implementation("com.squareup.retrofit2:retrofit:2.4.0")
     implementation("com.squareup.retrofit2:converter-gson:2.1.0")
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+    // LiveData (AndroidX)
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
 
     implementation(libs.androidx.work.runtime.ktx)
     val composeBom = platform(libs.androidx.compose.bom)
