@@ -1,10 +1,7 @@
 package com.zzt.compose.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.zzt.compose.net.GaodeApi
 import com.zzt.compose.net.GaodeHelper
 import com.zzt.compose.net.GaodeWeather
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,11 +14,18 @@ import kotlinx.coroutines.launch
  * 天气接口
  */
 class WeatherVM : ViewModel() {
-    var mWeather: MutableLiveData<GaodeWeather> = MutableLiveData()
+    private val _mWeather = MutableStateFlow<GaodeWeather?>(null)
+    val mWeather: StateFlow<GaodeWeather?> = _mWeather
 
     fun requestWeather(queryStr: String?) {
         viewModelScope.launch {
-            mWeather = GaodeHelper.getInstance().gitHubApi.queryWeather(queryStr) as MutableLiveData<GaodeWeather>
+            try {
+                val result = GaodeHelper.getInstance().gitHubApi.queryWeatherObj(queryStr)
+                _mWeather.value = result
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _mWeather.value = null
+            }
         }
     }
 }

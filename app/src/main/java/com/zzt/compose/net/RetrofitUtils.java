@@ -1,6 +1,10 @@
 package com.zzt.compose.net;
 
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -34,7 +38,12 @@ public class RetrofitUtils {
                 .readTimeout(DEFAULT_READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(@NonNull String s) {
+                Log.d(TAG, s);
+            }
+        });
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(httpLoggingInterceptor);
 
@@ -46,7 +55,6 @@ public class RetrofitUtils {
                 .baseUrl(baseUrl)
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
-//                .addConverterFactory(new LiveDataCallAdapterFactory())
                 .build();
     }
 

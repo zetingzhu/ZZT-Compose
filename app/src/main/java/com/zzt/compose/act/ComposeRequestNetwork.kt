@@ -61,17 +61,21 @@ fun requestNetworkUi() {
             color = MaterialTheme.colorScheme.background
         ) {
             val viewModel = remember { WeatherVM() }
-            val weather = viewModel.mWeather
+            // 使用 collectAsState 收集 StateFlow
+            val weather by viewModel.mWeather.collectAsState()
 
             Column {
                 Text(text = "请求网络接口")
                 Button(onClick = {
-                    viewModel.requestWeather("110101")
+                    viewModel.requestWeather("北京")
                 }) {
                     Text(text = "点击请求网络接口")
                 }
 
-                Text(text = "没有数据")
+                // 展示接口返回内容
+                Text(
+                    text = weather?.toString() ?: "没有数据"
+                )
             }
         }
     }

@@ -28,6 +28,8 @@ public interface GaodeApi {
     @GET("weather/weatherInfo?key=0a53a908f0378845f8c11b9acb5fd2f2&extensions=all")
     LiveData<GaodeWeather> queryWeather(@Query("city") String queryStr);
 
+    @GET("weather/weatherInfo?key=0a53a908f0378845f8c11b9acb5fd2f2&extensions=all")
+    GaodeWeather queryWeatherObj(@Query("city") String queryStr);
 
     @GET("weather/weatherInfo?key=0a53a908f0378845f8c11b9acb5fd2f2")
     Call<GaodeWeather> queryWeatherLives(@Query("city") String queryStr);
