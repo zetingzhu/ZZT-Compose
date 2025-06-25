@@ -1,4 +1,4 @@
-package com.example.zt_composttest
+package com.zzt.compose.net
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,9 +15,8 @@ object GlobalApiService {
     private const val BASE_URL = "https://restapi.amap.com/v3/"
 
     // 公开的静态 ApiService 实例
-    val apiService: ApiService by lazy { // 使用 lazy 确保只在首次访问时初始化
+    val apiService: ApiService by lazy {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-            // 在 debug 构建中打印请求和响应体, 生产环境应避免 BODY
             level = HttpLoggingInterceptor.Level.BODY
         }
 

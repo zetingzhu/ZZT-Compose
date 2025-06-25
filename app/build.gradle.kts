@@ -81,14 +81,25 @@ dependencies {
     // coil
     implementation("io.coil-kt:coil-compose:2.0.0")
 
-    // 网络请求
-    implementation("com.squareup.retrofit2:retrofit:2.4.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.1.0")
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.11.0"))
-    implementation("com.squareup.okhttp3:okhttp")
-    implementation("com.squareup.okhttp3:logging-interceptor")
+    // Retrofit
+    implementation(libs.retrofit) // 或者最新版本
+    implementation(libs.converter.gson) // 或者你选择的转换器，如 Moshi, Jackson
+
+    // OkHttp (Retrofit 会传递依赖，但显式声明可以控制版本，并用于高级配置)
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp3.okhttp)
+    implementation(libs.logging.interceptor)
+
     // LiveData (AndroidX)
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    // 如果在 Activity 中也使用 viewModels
+    implementation(libs.androidx.activity.ktx)
+    // ViewModel KTX
+    implementation(libs.androidx.lifecycle.viewmodel.ktx.v270)
+    // ViewModel 和 LiveData (或 Flow)
+    implementation(libs.androidx.lifecycle.livedata.ktx.v270) // 如果使用 LiveData
+    // 或者使用 Kotlin Coroutines Flow (推荐)
+    implementation(libs.kotlinx.coroutines.android.v1102) // 或者最新版本
 
     implementation(libs.androidx.work.runtime.ktx)
     val composeBom = platform(libs.androidx.compose.bom)

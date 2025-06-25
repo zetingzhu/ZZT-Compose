@@ -1,18 +1,28 @@
 package com.example.zt_composttest
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.zt_composttest.net.ApiService
+import com.example.zt_composttest.entiy.BaseGaodeWeather
+import com.example.zt_composttest.entiy.GaodeWeather
+import com.example.zt_composttest.net.GlobalApiService
+import com.example.zt_composttest.entiy.ForecastsDTO
+import com.example.zt_composttest.entiy.LivesDTO
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 /**
  * @author: zeting
  * @date: 2025/6/25
- * 帮我自定义一个 Converter.Factory 来写 UiState 状态，不用每个接口都自己来判断当前状态 UserViewModel，只需要返回结果就行了
+ *
  */
 class UserViewModel : ViewModel() {
+
     // 直接在内部访问全局的 ApiService 实例
     private val apiService: ApiService = GlobalApiService.apiService
 
@@ -36,15 +46,54 @@ class UserViewModel : ViewModel() {
                         UiState.Error("API Error: ${response.code()} ${response.message()}")
                 }
             } catch (e: Exception) {
+                e.printStackTrace()
                 weatherState.value = UiState.Error(e.message ?: "Network or other exception")
+            }
+        }
+    }
+
+    val MY_API_KEY = "0a53a908f0378845f8c11b9acb5fd2f2"
+    val weatherState2: MutableStateFlow<UiState<BaseGaodeWeather<ForecastsDTO, LivesDTO>>> =
+        MutableStateFlow(UiState.Loading)
+
+    fun fetchWeatherV2(cityCode: String) {
+        viewModelScope.launch {
+            launchSafeApiCall {
+                apiService.getWeatherV2(cityCode, MY_API_KEY)
+            }.collectLatest { uiStateResult ->
+                weatherState2.value = uiStateResult
             }
         }
     }
 }
 
-// 定义一个通用的 UI 状态类
+/**
+ * 定义一个通用的 UI 状态类
+ */
 sealed class UiState<out T> {
     object Loading : UiState<Nothing>()
     data class Success<out T>(val data: T) : UiState<T>()
     data class Error(val message: String) : UiState<Nothing>()
+}
+
+/**
+ * 通用的网络请求处理函数，将挂起函数的结果转换为 Flow<UiState<T>>.
+ *
+ * @param T 成功时返回的数据类型
+ * @param apiCall 一个挂起的 lambda 表达式，代表实际的网络 API 调用。
+ *                它应该直接返回成功时的数据类型 T。
+ * @return Flow<UiState<T>>
+ *   中文回复
+ *
+ */
+fun <T> launchSafeApiCall(apiCall: suspend () -> T): Flow<UiState<T>> {
+    return flow<UiState<T>> {
+        val result = apiCall()
+        emit(UiState.Success(result))
+    }.onStart {
+        emit(UiState.Loading)
+    }.catch { e ->
+        e.printStackTrace()
+        emit(UiState.Error(e.message ?: "An unknown error occurred"))
+    }
 }

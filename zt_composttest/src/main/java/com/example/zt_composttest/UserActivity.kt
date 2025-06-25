@@ -1,17 +1,11 @@
 package com.example.zt_composttest
 
-/**
- * @author: zeting
- * @date: 2025/6/25
- *
- */
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,11 +14,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.zt_composttest.entiy.BaseGaodeWeather
+import com.example.zt_composttest.entiy.GaodeWeather
+import com.example.zt_composttest.entiy.ForecastsDTO
+import com.example.zt_composttest.entiy.LivesDTO
 import com.example.zzt.okhttp.ui.theme.ZZTOKHttpTheme
 
+/**
+ * @author: zeting
+ * @date: 2025/6/25
+ *
+ */
 class UserActivity : ComponentActivity() {
-    // 使用默认的 ViewModelProvider 获取 UserViewModel 实例
-    private val userViewModel: UserViewModel by viewModels() // 不再需要自定义工厂
+    private val userViewModel: UserViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +37,14 @@ class UserActivity : ComponentActivity() {
         }
         // 首次加载数据
         userViewModel.fetchWeather("310000")
+        userViewModel.fetchWeatherV2("420600")
     }
 }
 
 @Composable
 fun UserScreen(viewModel: UserViewModel) {
     val uiState by viewModel.weatherState.collectAsState() // 观察 StateFlow
+    val uiState2 by viewModel.weatherState2.collectAsState() // 观察 StateFlow
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -52,7 +56,7 @@ fun UserScreen(viewModel: UserViewModel) {
             }
 
             is UiState.Success -> {
-                UserList(users = state.data) // 假设 GaodeWeather 有 geocodes 属性
+                UserList(users = state.data)
             }
 
             is UiState.Error -> {
@@ -65,10 +69,39 @@ fun UserScreen(viewModel: UserViewModel) {
         }
 
         Button(
-            onClick = { viewModel.fetchWeather("310000") },
+            onClick = {
+                viewModel.fetchWeather("310000")
+            },
             modifier = Modifier.padding(top = 16.dp)
         ) {
-            Text("Refresh Users")
+            Text("Refresh fetchWeather")
+        }
+
+        when (val state = uiState2) {
+            is UiState.Loading -> {
+                CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+            }
+
+            is UiState.Success -> {
+                UserList(users = state.data)
+            }
+
+            is UiState.Error -> {
+                Text(
+                    text = "Error: ${state.message}",
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
+
+        Button(
+            onClick = {
+                viewModel.fetchWeatherV2("420600")
+            },
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text("Refresh fetchWeather2")
         }
     }
 }
@@ -80,5 +113,13 @@ fun UserList(users: GaodeWeather) {
         text = "查询天气信息:\n ${users.toString()}",
         modifier = Modifier.padding(vertical = 8.dp)
     )
+}
 
+@Composable
+fun UserList(users: BaseGaodeWeather<ForecastsDTO, LivesDTO>) {
+    Text(
+        color = Color.White,
+        text = "查询天气信息:\n ${users.toString()}",
+        modifier = Modifier.padding(vertical = 8.dp)
+    )
 }
