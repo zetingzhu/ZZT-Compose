@@ -39,7 +39,8 @@ import kotlin.toString
 /**
  * @author: zeting
  * @date: 2025/6/23
- *
+ *  用于在 compose 中请求网络接口的示例
+ *  android studio  gemini 插件输入框， 输入框为啥输入中文会自动插入很多字母
  */
 class ComposeRequestNetwork : ComponentActivity() {
     companion object {
@@ -72,7 +73,7 @@ fun requestNetworkUi(viewModel: WeatherViewModel) {
         ) {
 
             val weather by viewModel.weatherState2.collectAsState()
-
+            
             Column {
                 Text(text = "请求网络接口")
                 Button(onClick = {

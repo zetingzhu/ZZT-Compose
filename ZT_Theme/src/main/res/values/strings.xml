@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ZT_Theme</string>
+    <string name="theme_title">Theme</string>
+
+    <string name="theme_mode_system_default">System default</string>
+    <string name="theme_mod_light">Light</string>
+    <string name="theme_mode_dark">Dark</string>
+
+    <string name="dialog_title">这是一个设置主题色的弹框</string>
+
+    <string name="dialog_ok">OK</string>
+
+</resources>
