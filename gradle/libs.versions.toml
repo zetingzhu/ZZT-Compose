@@ -82,6 +82,7 @@ wearComposeMaterial = "1.4.1"
 wearToolingPreview = "1.0.0"
 junitVersion = "1.2.1"
 activity = "1.10.1"
+cardview = "1.0.0"
 
 [libraries]
 accompanist-adaptive = { module = "com.google.accompanist:accompanist-adaptive", version.ref = "accompanist" }
@@ -205,6 +206,7 @@ play-services-wearable = { module = "com.google.android.gms:play-services-wearab
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+androidx-cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

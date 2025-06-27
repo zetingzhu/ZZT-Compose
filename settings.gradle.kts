@@ -19,3 +19,4 @@ rootProject.name = "ZZT-Compose"
 include(":app")
 include(":zt_composttest")
 include(":ZT_Theme")
+include(":ZT_Language")
