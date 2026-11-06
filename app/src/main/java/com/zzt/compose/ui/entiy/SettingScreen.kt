@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingScreen(
-    navigate: (SettingMenu) -> Unit, onClick: () -> Unit
+    navigate: (SettingMenu) -> Unit, onClick: (SettingMenu) -> Unit
 ) {
     NavigationItems(navigate = navigate, onClick = onClick)
 }
@@ -45,7 +45,7 @@ fun SettingScreen(
 fun NavigationItems(
     modifier: Modifier = Modifier,
     navigate: (SettingMenu) -> Unit,
-    onClick: () -> Unit
+    onClick: (SettingMenu) -> Unit
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -55,7 +55,7 @@ fun NavigationItems(
         items(SettingMenu.entries) { destination ->
             NavigationItem(destination) {
                 if (destination.isclick) {
-                    onClick()
+                    onClick(destination)
                 } else {
                     navigate(
                         destination

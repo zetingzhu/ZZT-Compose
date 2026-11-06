@@ -77,8 +77,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -95,8 +97,7 @@ import java.io.Serializable
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ZtNavMainView(
-) {
+fun ZtNavMainView(mainNavController: NavController = rememberNavController()) {
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -213,7 +214,7 @@ fun ZtNavMainView(
                         }
                     }
                     composable(Pages.PAGE_SETTING) {
-                        SettingPage()
+                        SettingPage(mainNavController)
                     }
                     composable(Pages.PAGE_SYSTEM) {
                         SystemPage()

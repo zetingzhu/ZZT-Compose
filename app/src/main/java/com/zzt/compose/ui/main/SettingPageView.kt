@@ -31,12 +31,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.compose.snippets.landing.LandingScreen
 import com.zzt.compose.R
-import com.zzt.compose.act.ComposeRequestNetwork
 import com.zzt.compose.theme.ZZTComposeTheme
 import com.zzt.compose.ui.entiy.SettingMenu
 import com.zzt.compose.ui.entiy.SettingScreen
@@ -44,24 +43,32 @@ import com.zzt.compose.ui.entiy.SettingScreen
 /**
  * @author: zeting
  * @date: 2025/4/14
- *
+ * 设置
  */
 
 @Composable
-fun SettingPage() {
+fun SettingPage(mainNavController: NavController = rememberNavController()) {
     val context = LocalContext.current
     val navController = rememberNavController()
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
     ) {
-        NavHost(navController, startDestination = "SettingScreen.kt") {
-            composable("SettingScreen.kt") {
+        NavHost(navController, startDestination = "SettingScreen") {
+            composable("SettingScreen") {
                 SettingScreen(
                     navigate = { navController.navigate(it.route) },
-                    onClick = {
-                        // 接口请求
-                        ComposeRequestNetwork.start(context)
+                    onClick = { setting ->
+                        when (setting.route) {
+                            "FullView" -> {
+                                // 接口请求
+                                mainNavController.navigate("full_screen/video")
+                            }
+
+                            "RequestsNetwork" -> {
+                                // 接口请求
+                                mainNavController.navigate("full_screen/network")
+                            }
+                        }
                     })
             }
             SettingMenu.entries.forEach { menu ->
@@ -69,7 +76,11 @@ fun SettingPage() {
                     when (menu) {
                         SettingMenu.ThemeSettings -> SettingPageV1()
                         SettingMenu.ThemeSettings2 -> SettingPageV2()
-                        SettingMenu.RequestsNetwork -> {}
+                        SettingMenu.RequestsNetwork -> {
+
+                        }
+
+                        SettingMenu.FullView -> {}
                     }
                 }
             }
@@ -79,10 +90,14 @@ fun SettingPage() {
 
 @Composable
 fun SettingPageV1() {
-    val contentPadding = WindowInsets
-        .systemBars
-        .add(WindowInsets(left = 16.dp, top = 16.dp, right = 16.dp, bottom = 16.dp))
-        .asPaddingValues()
+    val contentPadding = WindowInsets.systemBars.add(
+        WindowInsets(
+            left = 16.dp,
+            top = 16.dp,
+            right = 16.dp,
+            bottom = 16.dp
+        )
+    ).asPaddingValues()
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = contentPadding,
@@ -115,8 +130,7 @@ fun SettingPageV2() {
             SettingsDialogThemeChooserRow(
                 text = stringResource(R.string.feature_settings_dark_mode_config_system_default),
                 selected = false,
-                onClick = {
-                },
+                onClick = {},
             )
             SettingsDialogThemeChooserRow(
                 text = stringResource(R.string.feature_settings_dark_mode_config_light),
